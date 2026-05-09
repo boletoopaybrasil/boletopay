@@ -5,72 +5,76 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>BOLETO PAY — Sistema de Crédito</title>
 <style>
-*{box-sizing:border-box;margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif}
+*{box-sizing:border-box;margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif}
 :root{
-  --bp:#0A84FF;--bpd:#0066CC;--bpl:#E8F4FF;
-  --gr:#1A8C40;--grl:#E8FFF0;
-  --rd:#CC2F28;--rdl:#FFF0EF;
-  --am:#B36800;--aml:#FFF8E8;
-  --pu:#5B3FB8;--pul:#F0EDFF;
-  --tl:#0F6E56;--tll:#E8FBF5;
-  --surf:#fff;--bg:#F5F7FA;--brd:#E5E7EB;
-  --txt:#0A0A0A;--mu:#6B7280;--sec:#F9FAFB
+  --bp:#00D4FF;--bpd:#00A8CC;--bpl:rgba(0,212,255,.08);
+  --gr:#00E676;--grl:rgba(0,230,118,.08);
+  --rd:#FF4444;--rdl:rgba(255,68,68,.08);
+  --am:#FFB700;--aml:rgba(255,183,0,.08);
+  --pu:#A855F7;--pul:rgba(168,85,247,.08);
+  --tl:#00BFA5;--tll:rgba(0,191,165,.08);
+  --surf:#0D1B2A;--bg:#080E17;--brd:rgba(255,255,255,.08);
+  --txt:#F0F4F8;--mu:rgba(240,244,248,.45);--sec:rgba(255,255,255,.04);
+  --card:#0D1B2A;--card2:#111E2E;
 }
-body{background:var(--bg);color:var(--txt);min-height:100vh}
+body{background:var(--bg);color:var(--txt);min-height:100vh;background-image:radial-gradient(ellipse at 20% 50%,rgba(0,212,255,.04) 0%,transparent 60%),radial-gradient(ellipse at 80% 20%,rgba(168,85,247,.03) 0%,transparent 60%)}
 .scr{display:none}.scr.on{display:block;min-height:100vh}
-/* Garante visibilidade mesmo quando JS seta display direto */
 #s-form-cliente.on{display:block!important}
-.fi{width:100%;padding:11px 13px;border:1.5px solid var(--brd);border-radius:10px;font-size:14px;background:#fff;color:var(--txt);outline:none;transition:.2s}
-.fi:focus{border-color:var(--bp)}.fi.err{border-color:var(--rd)}
-.fsel{width:100%;padding:11px 13px;border:1.5px solid var(--brd);border-radius:10px;font-size:14px;background:#fff;color:var(--txt);outline:none}
-.fl{font-size:12px;color:var(--mu);display:block;margin-bottom:5px;font-weight:500}
+.fi{width:100%;padding:11px 13px;border:1.5px solid var(--brd);border-radius:10px;font-size:14px;background:rgba(255,255,255,.04);color:var(--txt);outline:none;transition:.2s}
+.fi:focus{border-color:var(--bp);box-shadow:0 0 0 3px rgba(0,212,255,.1)}.fi.err{border-color:var(--rd)}
+.fi::placeholder{color:var(--mu)}
+textarea.fi{resize:none}
+.fsel{width:100%;padding:11px 13px;border:1.5px solid var(--brd);border-radius:10px;font-size:14px;background:rgba(13,27,42,.95);color:var(--txt);outline:none}
+.fsel option{background:#0d1b2a;color:#f0f4f8}
+.fl{font-size:12px;color:rgba(240,244,248,.7);display:block;margin-bottom:5px;font-weight:600}
 .fld{margin-bottom:1rem}
 .shell{display:flex;min-height:100vh;background:var(--bg)}
-.sidebar{width:220px;background:#fff;border-right:1px solid var(--brd);padding:1.25rem 1rem;flex-shrink:0;display:flex;flex-direction:column;position:sticky;top:0;height:100vh;overflow-y:auto}
+.sidebar{width:224px;background:var(--card);border-right:1px solid var(--brd);padding:1.25rem 1rem;flex-shrink:0;display:flex;flex-direction:column;position:sticky;top:0;height:100vh;overflow-y:auto}
 .sb-logo{display:flex;align-items:center;gap:10px;margin-bottom:1.75rem;padding:0 .375rem}
-.sb-mark{width:32px;height:32px;border-radius:10px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:13px;font-weight:700}
+.sb-mark{width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;color:#000;font-size:13px;font-weight:700;background:linear-gradient(135deg,#00D4FF,#0088CC);box-shadow:0 0 15px rgba(0,212,255,.3)}
 .sb-nm{font-size:13px;font-weight:700;color:var(--txt)}.sb-rl{font-size:10px;color:var(--mu)}
 .ni{display:flex;align-items:center;gap:8px;padding:9px 10px;border-radius:9px;cursor:pointer;font-size:13px;color:var(--mu);margin-bottom:2px;transition:.15s}
 .ni:hover{background:var(--sec);color:var(--txt)}
-.ni.on-a{background:var(--bpl);color:var(--bp);font-weight:600}
-.ni.on-l{background:var(--pul);color:var(--pu);font-weight:600}
+.ni.on-a{background:var(--bpl);color:var(--bp);font-weight:600;box-shadow:inset 2px 0 0 var(--bp)}
+.ni.on-l{background:var(--pul);color:var(--pu);font-weight:600;box-shadow:inset 2px 0 0 var(--pu)}
 .nic{font-size:14px;width:18px;text-align:center;flex-shrink:0}
 .n-badge{display:inline-flex;align-items:center;justify-content:center;background:var(--rd);color:#fff;font-size:10px;padding:1px 6px;border-radius:20px;font-weight:700;margin-left:auto;flex-shrink:0}
-.n-badge.am{background:var(--am)}
+.n-badge.am{background:var(--am);color:#000}
 .sb-bot{margin-top:auto;padding-top:.875rem;border-top:1px solid var(--brd)}
 .sb-usr{display:flex;align-items:center;gap:8px;padding:.5rem .375rem;margin-bottom:.375rem}
 .sb-av{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
 .content{flex:1;padding:1.75rem;overflow-y:auto}
 .ph{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:1.75rem}
 .pt{font-size:20px;font-weight:700;color:var(--txt)}.ps{font-size:12px;color:var(--mu);margin-top:3px}
-.btn{display:inline-flex;align-items:center;gap:7px;padding:10px 18px;border:none;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;color:#fff;background:var(--bp);transition:.15s}
-.btn:hover{opacity:.9}.btn.gr{background:var(--gr)}.btn.rd{background:var(--rd)}.btn.am{background:var(--am)}.btn.pu{background:#7C3AED}
-.btn-ghost{padding:9px 16px;background:var(--sec);color:var(--txt);border:1px solid var(--brd);border-radius:9px;font-size:13px;cursor:pointer;font-weight:500}
-.btn-send{padding:12px 22px;background:var(--bp);color:#fff;border:none;border-radius:11px;font-size:14px;font-weight:600;cursor:pointer;width:100%}
+.btn{display:inline-flex;align-items:center;gap:7px;padding:10px 18px;border:none;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;color:#000;background:var(--bp);transition:.15s}
+.btn:hover{opacity:.85}.btn.gr{background:var(--gr);color:#000}.btn.rd{background:var(--rd);color:#fff}.btn.am{background:var(--am);color:#000}.btn.pu{background:var(--pu);color:#fff}
+.btn-ghost{padding:9px 16px;background:var(--sec);color:var(--txt);border:1px solid var(--brd);border-radius:9px;font-size:13px;cursor:pointer;font-weight:500;transition:.15s}
+.btn-ghost:hover{border-color:var(--bp);color:var(--bp)}
+.btn-send{padding:12px 22px;background:var(--bp);color:#000;border:none;border-radius:11px;font-size:14px;font-weight:600;cursor:pointer;width:100%}
 .back{font-size:13px;color:var(--mu);cursor:pointer;margin-bottom:1.25rem;display:inline-flex;align-items:center;gap:5px;background:none;border:none;padding:0}
 .back:hover{color:var(--bp)}
 .mg4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:1.5rem}
 .mg3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-bottom:1.5rem}
 .mg2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:1.5rem}
-.mc{background:#fff;border-radius:13px;border:1px solid var(--brd);padding:1.125rem;transition:.15s}
-.mc:hover{border-color:var(--bp)}
-.ml{font-size:10px;color:var(--mu);margin-bottom:7px;font-weight:500;text-transform:uppercase;letter-spacing:.04em}
+.mc{background:var(--card);border-radius:13px;border:1px solid var(--brd);padding:1.125rem;transition:.15s}
+.mc:hover{border-color:rgba(0,212,255,.2);box-shadow:0 0 20px rgba(0,212,255,.06)}
+.ml{font-size:10px;color:var(--mu);margin-bottom:7px;font-weight:600;text-transform:uppercase;letter-spacing:.06em}
 .mv{font-size:22px;font-weight:700;margin-bottom:3px}.mt{font-size:11px}
 .tu{color:var(--gr)}.td{color:var(--rd)}
 .stl{font-size:14px;font-weight:700;margin-bottom:.875rem;color:var(--txt)}
-.tbl{background:#fff;border-radius:13px;border:1px solid var(--brd);overflow:hidden}
-.th{display:grid;padding:10px 14px;background:var(--sec);font-size:11px;font-weight:600;color:var(--mu);text-transform:uppercase;letter-spacing:.03em}
+.tbl{background:var(--card);border-radius:13px;border:1px solid var(--brd);overflow:hidden}
+.th{display:grid;padding:10px 14px;background:var(--sec);font-size:11px;font-weight:600;color:var(--mu);text-transform:uppercase;letter-spacing:.06em}
 .tr{display:grid;padding:12px 14px;border-top:1px solid var(--brd);font-size:12px;align-items:center;cursor:pointer;transition:.15s}
-.tr:hover{background:#FAFBFF}
+.tr:hover{background:var(--sec)}
 .ci{display:flex;align-items:center;gap:9px}
-.av{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
+.av{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
 .cn{font-size:12px;font-weight:600;color:var(--txt)}.cx{font-size:11px;color:var(--mu);margin-top:1px}
 .bdg{display:inline-flex;align-items:center;padding:3px 9px;border-radius:20px;font-size:10px;font-weight:600}
 .b-gr{background:var(--grl);color:var(--gr)}.b-rd{background:var(--rdl);color:var(--rd)}
 .b-bl{background:var(--bpl);color:var(--bp)}.b-am{background:var(--aml);color:var(--am)}
 .b-pu{background:var(--pul);color:var(--pu)}.b-tl{background:var(--tll);color:var(--tl)}
-.card{background:#fff;border-radius:14px;border:1px solid var(--brd);padding:1.375rem}
-.ctit{font-size:10px;font-weight:700;color:var(--bp);text-transform:uppercase;letter-spacing:.05em;margin-bottom:.875rem;padding-bottom:7px;border-bottom:2px solid var(--bpl)}
+.card{background:var(--card);border-radius:14px;border:1px solid var(--brd);padding:1.375rem}
+.ctit{font-size:10px;font-weight:700;color:var(--bp);text-transform:uppercase;letter-spacing:.06em;margin-bottom:.875rem;padding-bottom:7px;border-bottom:1px solid var(--brd)}
 .dr{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid var(--brd);font-size:12px}
 .dr:last-child{border-bottom:none}
 .dk{color:var(--mu)}.dv{font-weight:600}
@@ -80,7 +84,6 @@ body{background:var(--bg);color:var(--txt);min-height:100vh}
 .tp{display:none}.tp.on{display:block}
 .ef2{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin-bottom:11px}
 .ef-full{grid-column:1/-1}
-/* UPLOAD REAL */
 .up-zone{border:2px dashed var(--brd);border-radius:13px;padding:1.375rem;text-align:center;cursor:pointer;transition:.2s;background:var(--sec);position:relative;overflow:hidden}
 .up-zone:hover{border-color:var(--bp);background:var(--bpl)}
 .up-zone.done{border-color:var(--gr);background:var(--grl);border-style:solid}
@@ -90,71 +93,54 @@ body{background:var(--bg);color:var(--txt);min-height:100vh}
 .up-sub{font-size:11px;color:var(--mu)}
 .up-nm{font-size:12px;font-weight:600;color:var(--gr);margin-top:5px}
 .up-preview{width:100%;max-height:120px;object-fit:cover;border-radius:9px;margin-top:8px;display:none}
-/* APARELHO */
 .ap-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:1.25rem}
-.ap-c{border:2px solid var(--brd);border-radius:12px;padding:1rem;cursor:pointer;text-align:center;transition:.2s}
+.ap-c{border:2px solid var(--brd);border-radius:12px;padding:1rem;cursor:pointer;text-align:center;transition:.2s;background:var(--sec)}
 .ap-c:hover{border-color:var(--bp)}.ap-c.sel{border-color:var(--bp);background:var(--bpl)}
-/* PORTAL */
-.pw{min-height:100vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#0A1628,#0F2040);padding:2rem}
-.pc{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:20px;padding:2rem 1.5rem;cursor:pointer;text-align:center;transition:.2s}
-.pc:hover{transform:translateY(-2px);background:rgba(255,255,255,.1)}
-/* LOGIN */
-.lw{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:2rem}
-.lc{background:#fff;border-radius:22px;padding:2.5rem;width:100%;max-width:380px;border:1px solid var(--brd)}
-/* LOJISTA */
-.lj-top{background:#fff;border-bottom:1px solid var(--brd);padding:.875rem 1.5rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:10}
-.lj-shell{display:flex;flex-direction:column;min-height:100vh;background:var(--bg)}
-.nbell{width:36px;height:36px;background:var(--sec);border-radius:9px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:16px;position:relative;border:1px solid var(--brd)}
-.ndot{width:8px;height:8px;background:var(--rd);border-radius:50%;position:absolute;top:6px;right:6px;border:2px solid #fff}
-.err-msg{font-size:11px;color:var(--rd);margin-top:4px;display:none}
-.err-msg.on{display:block}
-/* ACARD */
-.acard{background:#fff;border-radius:14px;border:2px solid rgba(10,132,255,.15);padding:1.375rem;margin-bottom:13px}
-.acard-meta{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;background:var(--sec);border-radius:10px;padding:.875rem;margin-bottom:11px}
-.am-l{font-size:10px;color:var(--mu);margin-bottom:2px;font-weight:500}.am-v{font-size:13px;font-weight:700}
-/* PROG */
-.prog-row{display:flex;align-items:center;gap:10px;margin-bottom:7px}
-.prog-bar{flex:1;height:7px;background:var(--sec);border-radius:4px;overflow:hidden}
-.prog-fill{height:100%;border-radius:4px}
-/* ALERT */
-.al{border-radius:13px;padding:1rem 1.25rem;margin-bottom:12px}
-.al-am{background:var(--aml);border:1.5px solid rgba(179,104,0,.25)}
-.al-gr{background:var(--grl);border:1.5px solid rgba(26,140,64,.25)}
-.al-bl{background:var(--bpl);border:1px solid rgba(10,132,255,.2)}
-.al-rd{background:var(--rdl);border:1.5px solid rgba(204,47,40,.2)}
-.ntag{font-size:10px;background:var(--rd);color:#fff;padding:2px 8px;border-radius:20px;font-weight:700}
-/* LOGO UPLOAD LOJISTA */
-.logo-up{width:80px;height:80px;border-radius:16px;background:var(--sec);border:2px dashed var(--brd);display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;overflow:hidden;position:relative;flex-shrink:0}
-.logo-up:hover{border-color:var(--pu)}
-.logo-up input{position:absolute;inset:0;opacity:0;cursor:pointer}
-.logo-up img{width:100%;height:100%;object-fit:cover;display:none}
-/* FORM CLIENTE LINK */
-.form-public{max-width:620px;margin:0 auto;padding:2rem}
-/* ESCOLHA RESPOSTA */
-.rc-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:1rem}
-.rc-c{border:2px solid var(--brd);border-radius:12px;padding:1rem;cursor:pointer;text-align:center;transition:.2s}
-.rc-c:hover{border-color:var(--bp)}
-.rc-c.sel-gr{border-color:var(--gr);background:var(--grl)}
-.rc-c.sel-am{border-color:var(--am);background:var(--aml)}
-/* DOC STATUS */
-.doc-box{border:1px solid var(--brd);border-radius:12px;padding:1.125rem;text-align:center;background:var(--sec)}
+.pw{min-height:100vh;display:flex;align-items:center;justify-content:center;background:var(--bg);padding:2rem;position:relative;overflow:hidden}
+.pw::after{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(0,212,255,.02) 1px,transparent 1px),linear-gradient(90deg,rgba(0,212,255,.02) 1px,transparent 1px);background-size:60px 60px;pointer-events:none}
+.pc{background:rgba(0,212,255,.04);border:1px solid rgba(0,212,255,.12);border-radius:16px;padding:2rem 1.5rem;cursor:pointer;text-align:center;transition:.3s}
+.pc:hover{transform:translateY(-4px);background:rgba(0,212,255,.08);box-shadow:0 20px 40px rgba(0,0,0,.3)}
+.lf{background:rgba(13,27,42,.9);border:1px solid var(--brd);border-radius:16px;padding:2rem;width:100%;max-width:400px;backdrop-filter:blur(20px)}
+.lf-logo{text-align:center;margin-bottom:2rem}
+.lt{font-size:11px;color:var(--mu);font-weight:600;text-transform:uppercase;letter-spacing:.08em;margin-bottom:1.25rem;padding-bottom:.75rem;border-bottom:1px solid var(--brd)}
+.al{padding:.75rem 1rem;border-radius:10px;font-size:13px;margin-bottom:.875rem;display:none}
+.al.on{display:block}
+.al.al-rd{background:var(--rdl);color:var(--rd);border:1px solid rgba(255,68,68,.2)}
+.al.al-gr{background:var(--grl);color:var(--gr)}
+.al.al-am{background:var(--aml);color:var(--am)}
+.al.al-bl{background:var(--bpl);color:var(--bp)}
+.q-card{background:var(--card);border:1px solid var(--brd);border-radius:14px;padding:1.125rem;margin-bottom:10px;cursor:pointer;transition:.2s}
+.q-card:hover{border-color:rgba(0,212,255,.3);box-shadow:0 0 20px rgba(0,212,255,.06)}
+.q-card.novo{border-left:3px solid var(--bp)}
+.res-modal{background:var(--card2);border-radius:12px;padding:1.125rem;margin-bottom:1rem;border:1px solid var(--brd)}
+.doc-box{border:1px solid var(--brd);border-radius:12px;padding:1rem;text-align:center;background:var(--sec)}
 .doc-box.ok{border-color:var(--gr);background:var(--grl)}
 .doc-box.pend{border-color:var(--am);background:var(--aml)}
-@media(max-width:700px){
-  .sidebar{display:none}.mg4{grid-template-columns:1fr 1fr}
-  .ef2{grid-template-columns:1fr}.ap-grid{grid-template-columns:1fr}
-  .rc-grid{grid-template-columns:1fr}
+.lj-top{background:var(--card);border-bottom:1px solid var(--brd);padding:.875rem 1.25rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:10}
+.lj-nav{display:flex;gap:2px;background:var(--sec);border-radius:10px;padding:3px;overflow-x:auto}
+.lj-ni{padding:7px 14px;border-radius:8px;font-size:12px;font-weight:500;color:var(--mu);cursor:pointer;transition:.15s;white-space:nowrap}
+.lj-ni:hover{color:var(--txt)}
+.lj-ni.on-l{background:var(--card2);color:var(--bp);font-weight:600}
+.rc-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:1rem}
+.rc-c{background:var(--sec);border:1px solid var(--brd);border-radius:12px;padding:1rem;cursor:pointer;text-align:center;transition:.15s}
+.rc-c:hover{border-color:var(--bp);background:var(--bpl)}
+.corr-tab{padding:10px 14px;font-size:12px;color:var(--mu);border-bottom:2px solid transparent;cursor:pointer}
+.corr-tab.on{color:var(--bp);border-bottom-color:var(--bp)}
+.ov{position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:1000;display:flex;align-items:center;justify-content:center;padding:1rem;backdrop-filter:blur(4px)}
+.ov-box{background:var(--card);border:1px solid var(--brd);border-radius:18px;max-width:680px;width:100%;max-height:90vh;overflow-y:auto;box-shadow:0 25px 60px rgba(0,0,0,.5)}
+.err-msg{font-size:12px;color:var(--rd);margin-top:6px;display:none}
+.err-msg.on{display:block}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+::-webkit-scrollbar{width:5px;height:5px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:rgba(255,255,255,.08);border-radius:3px}
+::-webkit-scrollbar-thumb:hover{background:rgba(0,212,255,.2)}
+@media(max-width:768px){
+  .sidebar{display:none}
+  .mg4{grid-template-columns:1fr 1fr}
+  .mg3{grid-template-columns:1fr}
+  .ef2{grid-template-columns:1fr}
 }
-
-.lj-sidebar{width:200px;background:#fff;border-right:1px solid var(--brd);padding:1.25rem 1rem;flex-shrink:0;display:flex;flex-direction:column;min-height:calc(100vh - 57px)}
-.lj-ni{display:flex;align-items:center;gap:8px;padding:9px 10px;border-radius:9px;cursor:pointer;font-size:13px;color:var(--mu);margin-bottom:2px;transition:.15s}
-.lj-ni:hover{background:var(--sec);color:var(--txt)}
-.lj-ni.on{background:var(--pul);color:var(--pu);font-weight:600}
-.lj-body{display:flex;flex:1}
-
-.parc-btns{display:flex;flex-wrap:wrap;gap:5px;margin-top:5px}
-.parc-btn{padding:5px 10px;font-size:11px;font-weight:600;border:1.5px solid var(--brd);border-radius:7px;cursor:pointer;background:#fff;color:var(--mu);transition:.1s}
-.parc-btn.sel{border-color:currentColor;font-weight:700}
 </style>
 </head>
 <body>
@@ -173,7 +159,7 @@ var _ultimoDBHash = '';
 var _fbConectado = false;
 var _fbPolling = null;
 
-var DB_DEFAULT = {"analistas":[{"ativo":true,"email":"admin@boletopay.com.br","id":1,"nome":"Admin BOLETO PAY","role":"admin","senha":"admin123"},{"ativo":true,"email":"ana@boletopay.com.br","id":2,"nome":"Ana Souza","role":"analista","senha":"ana123"},{"ativo":true,"email":"carlos@boletopay.com.br","id":3,"nome":"Carlos Lima","role":"analista","senha":"carlos123"}],"lojistas":[{"ativo":true,"cidade":"Cascavel - PR","email":"financeiro@eletro360.com.br","id":101,"nome":"Eletro 360","ramo":"celulares","resp":"Marcos Rocha","senha":"eletro123","props":[]},{"ativo":true,"cidade":"Foz do Iguaçu - PR","email":"contato@mobispeed.com.br","id":102,"nome":"MobiSpeed","ramo":"mobilidade","resp":"Felipe Prado","senha":"mobi123","props":[]},{"ativo":true,"cidade":"—","email":"beltrao","id":1776516689298,"nome":"beltrao","props":[{"banco":"—","cep":"","cor":"","cpf":"08878999946","data":"18/04, 09:59","docs":[null,{"done":true,"name":"WhatsApp Image 2026-04-14 at 18.57.46.jpeg","type":"image/jpeg"},{"done":true,"name":"WhatsApp Image 2026-04-14 at 18.57.46.jpeg","type":"image/jpeg"},{"done":true,"name":"WhatsApp Image 2026-04-14 at 18.57.46.jpeg","type":"image/jpeg"},{"done":true,"name":"WhatsApp Image 2026-04-14 at 18.57.46.jpeg","type":"image/jpeg"}],"email":"","end":"","id":1776517140036,"imei1":"","imei2":"","lido":true,"lj_id":1776516689298,"lj_nome":"beltrao","mae":"","marca":"","modal":"—","modelo":"17","nasc":"1996-07-24","neg":"Não, nome limpo","nome":"wellynton marlon","obs_ap":"","obs_res":"","parcelas":"—","prof":"empresario","renda":"R$ 50000","resultado":"Negado","rg":"5621651651","tel":"45999231703","tempo":"Menos de 6 meses","tipo":"Celular","valor":"R$ 7500","valorAprov":"Negado","vinc":"CLT registrado"},{"cep":"","cond":"Novo (lacrado)","cor":"","cpf":"—","data":"09/05, 01:38","docs":[null,{"done":false},{"done":false},{"done":false},{"done":false}],"email":"","end":"","id":1778301538481,"imei1":"—","imei2":"","lido":false,"lj_id":1776516689298,"lj_nome":"beltrao","mae":"","marca":"","modelo":"—","nasc":"","neg":"Não, nome limpo","nome":"marlonm","obs_ap":"","prof":"","renda":"R$ —","rg":"","serial":"","tel":"","tempo":"Menos de 6 meses","tipo":"Celular","valor":"R$ —","vinc":"CLT registrado"}],"ramo":"celulares","resp":"—","senha":"123456"},{"ativo":true,"cidade":"CASCAVEL PARANA","email":"melevacell","id":1776695968720,"nome":"MELEVACELL","props":[{"cep":"85819120","cor":"","cpf":"07996536910","data":"20/04, 11:29","docs":[null,{"b64":null,"done":true,"name":"image.jpg","type":"image/jpeg"},{"b64":null,"done":true,"name":"image.jpg","type":"image/jpeg"},{"b64":null,"done":true,"name":"image.jpg","type":"image/jpeg"},{"done":false}],"email":"matheus56@icloud.com","end":"Ciências sociais","id":1776698994782,"imei1":"","imei2":"","lido":false,"lj_id":1776695968720,"lj_nome":"MELEVACELL","mae":"Maria Inês de Lima","marca":"iPhone","modelo":"17","nasc":"1996-09-30","neg":"Não sei","nome":"Matheus Anderson de Lima da Silva","obs_ap":"Gostaria de dar um 15 pro max 512gb","prof":"Motorista","renda":"R$ 5000","rg":"127791201","tel":"45998311186","tempo":"2 a 5 anos","tipo":"Celular","valor":"R$ 8000","vinc":"CLT registrado"},{"cep":"85820899","cor":"","cpf":"04338018160","data":"20/04, 12:53","docs":[null,{"b64":null,"done":true,"name":"webview_tmp_file5794985973451329052.jpg","type":"image/jpeg"},{"b64":null,"done":true,"name":"webview_tmp_file6101388081277665369.jpg","type":"image/jpeg"},{"b64":null,"done":true,"name":"webview_tmp_file675032630820534055.jpg","type":"image/jpeg"},{"b64":null,"done":true,"name":"webview_tmp_file3449190193953621359.jpg","type":"image/jpeg"}],"email":"bia.nc@hotmail.com","end":"Br 369 km514","id":1776700394052,"imei1":"*#06#","imei2":"","lido":false,"lj_id":1776695968720,"lj_nome":"MELEVACELL","mae":"Suely Neres Cardoso","marca":"iPhone","modelo":"16 pró","nasc":"1990-03-27","neg":"Sim","nome":"Abiatar Neres de Oliveira","obs_ap":"Precisava de um aparelho em boas condições, não precisa ser novo, é presente para minha filha.","prof":"Recepcionista ADM/ Vendedora","renda":"R$ 3.500,00","rg":"001826481","tel":"45991166761","tempo":"1 a 2 anos","tipo":"Celular","valor":"R$ 3.500","vinc":"CLT registrado"},{"cep":"85817020","cor":"Preto","cpf":"05660694900","data":"20/04, 12:54","docs":[null,{"b64":null,"done":true,"name":"image.jpg","type":"image/jpeg"},{"b64":null,"done":true,"name":"image.jpg","type":"image/jpeg"},{"b64":null,"done":true,"name":"image.jpg","type":"image/jpeg"},{"b64":null,"done":true,"name":"image.jpg","type":"image/jpeg"}],"email":"Nilcelima838@gmail.com","end":"Rua Ipanema 384","id":1776700485735,"imei1":"358691738674070","imei2":"","lido":false,"lj_id":1776695968720,"lj_nome":"MELEVACELL","mae":"Irene Natália de Oliveira","marca":"iPhone","modelo":"IPhone 15 pro max","nasc":"1983-10-23","neg":"Sim","nome":"Nilce Lima","obs_ap":"","prof":"Auxiliar de cozinha","renda":"R$ 1.900","rg":"99384360","tel":"45998186190","tempo":"1 a 2 anos","tipo":"Celular","valor":"R$ 5000","vinc":"CLT registrado"},{"cep":"85806010","cor":"Banco","cpf":"08965939917","data":"20/04, 12:57","docs":[null,{"b64":null,"done":true,"name":"image.jpg","type":"image/jpeg"},{"b64":null,"done":true,"name":"image.jpg","type":"image/jpeg"},{"b64":null,"done":true,"name":"image.jpg","type":"image/jpeg"},{"done":false}],"email":"laryferoli7@gnail.com","end":"Rua apnajes","id":1776700663962,"imei1":"*#06#","imei2":"","lido":false,"lj_id":1776695968720,"lj_nome":"MELEVACELL","mae":"Viviane Maria Oliveira","marca":"iPhone","modelo":"17 pro Max","nasc":"1994-07-06","neg":"Sim","nome":"Larissa Fernanda Oliveira","obs_ap":"","prof":"Vendedora","renda":"R$ 1.518","rg":"126275455","tel":"45988428548","tempo":"1 a 2 anos","tipo":"Celular","valor":"R$ 500,00","vinc":"CLT registrado"},{"cep":"85806030","cor":"Tanto faz","cpf":"09597086930","data":"20/04, 13:07","docs":[null,{"b64":null,"done":true,"name":"image.jpg","type":"image/jpeg"},{"b64":null,"done":true,"name":"image.jpg","type":"image/jpeg"},{"b64":null,"done":true,"name":"image.jpg","type":"image/jpeg"},{"b64":null,"done":true,"name":"image.jpg","type":"image/jpeg"}],"email":"viecellidellabettac@gmail.com","end":"Rua Txikaos","id":1776701236712,"imei1":"","imei2":"","lido":false,"lj_id":1776695968720,"lj_nome":"MELEVACELL","mae":"Loreni Aparecida da Silva","marca":"iPhone","modelo":"14","nasc":"1996-05-10","neg":"Sim","nome":"Claudionara viecelli della betta","obs_ap":"Tenho um iPhone 11 de 256 gb para dar na troca","prof":"Secretaria","renda":"R$ 2000","rg":"123208803","tel":"45998292854","tempo":"Menos de 6 meses","tipo":"Celular","valor":"R$ 3000","vinc":"Autônomo"},{"cep":"85806060","cor":"Branco","cpf":"11523266945","data":"20/04, 13:09","docs":[null,{"b64":null,"done":true,"name":"image.jpg","type":"image/jpeg"},{"b64":null,"done":true,"name":"image.jpg","type":"image/jpeg"},{"b64":null,"done":true,"name":"image.jpg","type":"image/jpeg"},{"b64":null,"done":true,"name":"image.jpg","type":"image/jpeg"}],"email":"brunaalexandro@outlook.com","end":"Apalais,1210 - Santa Cruz","id":1776701394102,"imei1":"","imei2":"","lido":false,"lj_id":1776695968720,"lj_nome":"MELEVACELL","mae":"Fabiana da Silva Morais de Lima","marca":"iPhone","modelo":"15 Promax","nasc":"1999-01-25","neg":"Sim","nome":"Bruna Morais de Lima Silva","obs_ap":"Indiferente de cor, pode ser um iPhone 15 ou 16","prof":"Vendedor","renda":"R$ 3.500,00","rg":"11523266945","tel":"45998125420","tempo":"6 meses a 1 ano","tipo":"Celular","valor":"R$ 4.500,00","vinc":"CLT registrado"},{"cep":"85824000","cor":"Preto","cpf":"13298829978","data":"20/04, 13:20","docs":[null,{"b64":null,"done":true,"name":"image.jpg","type":"image/jpeg"},{"b64":null,"done":true,"name":"image.jpg","type":"image/jpeg"},{"b64":null,"done":true,"name":"image.jpg","type":"image/jpeg"},{"b64":null,"done":true,"name":"image.jpg","type":"image/jpeg"}],"email":"adryelcamargo258@gmail","end":"Linha zanotto Pinhalzinho","id":1776702015645,"imei1":"","imei2":"","lido":false,"lj_id":1776695968720,"lj_nome":"MELEVACELL","mae":"Deysemar Pereira de Mendonça","marca":"Iphone","modelo":"Iphone 14","nasc":"2003-05-30","neg":"Não sei","nome":"Adryel Mendonça de Camargo","obs_ap":"","prof":"Trabalhador rural","renda":"R$ 3750","rg":"147015992","tel":"+5545999087649","tempo":"2 a 5 anos","tipo":"Celular","valor":"R$ 3000","vinc":"CLT registrado"},{"cep":"85818410","cor":"Preto","cpf":"11690472979","data":"20/04, 13:23","docs":[null,{"b64":null,"done":true,"name":"image.jpg","type":"image/jpeg"},{"b64":null,"done":true,"name":"image.jpg","type":"image/jpeg"},{"b64":null,"done":true,"name":"image.jpg","type":"image/jpeg"},{"b64":null,"done":true,"name":"image.jpg","type":"image/jpeg"}],"email":"milenazenigarcia@gmail.com","end":"Rua Veneza 845","id":1776702199954,"imei1":"","imei2":"","lido":false,"lj_id":1776695968720,"lj_nome":"MELEVACELL","mae":"Márcia Maria Zeni","marca":"Apple","modelo":"Apple Watch","nasc":"2004-07-25","neg":"Sim","nome":"Milena Kamily Zeni Garcia","obs_ap":"","prof":"Assistente administrativo I","renda":"R$ 2400","rg":"142806193","tel":"45998131403","tempo":"1 a 2 anos","tipo":"Celular","valor":"R$ 2000","vinc":"CLT registrado"},{"cep":"85806660","cor":"Azul","cpf":"08844583933","data":"20/04, 13:33","docs":[null,{"b64":null,"done":true,"name":"image.jpg","type":"image/jpeg"},{"b64":null,"done":true,"name":"image.jpg","type":"image/jpeg"},{"b64":null,"done":true,"name":"image.jpg","type":"image/jpeg"},{"b64":null,"done":true,"name":"image.jpg","type":"image/jpeg"}],"email":"josehbcoimbra@hotmail.com","end":"Rua Ametista, 975 - Siena","id":1776702794557,"imei1":"*#06#","imei2":"","lido":false,"lj_id":1776695968720,"lj_nome":"MELEVACELL","mae":"Sônia de Fátima Becker Coimbra","marca":"Apple","modelo":"iPhone 17 PRO","nasc":"1997-06-16","neg":"Sim","nome":"José Henrique Becker Coimbra","obs_ap":"Restante do valor darei no dinheiro","prof":"Auxiliar de laboratorio","renda":"R$ 5000","rg":"128472916","tel":"45998188619","tempo":"Mais de 5 anos","tipo":"Celular","valor":"R$ 4000","vinc":"CLT registrado"},{"cep":"87303030","cor":"Preto","cpf":"08030060980","data":"20/04, 13:44","docs":[null,{"b64":null,"done":true,"name":"image.jpg","type":"image/jpeg"},{"b64":null,"done":true,"name":"image.jpg","type":"image/jpeg"},{"b64":null,"done":true,"name":"image.jpg","type":"image/jpeg"},{"b64":null,"done":true,"name":"image.jpg","type":"image/jpeg"}],"email":"lukinha_henriqe@hotmail.com","end":"Rua Belem","id":1776703447991,"imei1":"","imei2":"","lido":false,"lj_id":1776695968720,"lj_nome":"MELEVACELL","mae":"Cristiana Francisco de Oliveira","marca":"iPhone","modelo":"iPhone 15","nasc":"1994-09-23","neg":"Sim","nome":"Lucas Henrique da Silva","obs_ap":"","prof":"Alimentador de Produção","renda":"R$ 3.000","rg":"124333865","tel":"(44) 999504726","tempo":"Mais de 5 anos","tipo":"Celular","valor":"R$ 3000","vinc":"CLT registrado"},{"cep":"85818745","cor":"Branco","cpf":"11899462970","data":"20/04, 14:01","docs":[null,{"b64":null,"done":true,"name":"image.jpg","type":"image/jpeg"},{"b64":null,"done":true,"name":"image.jpg","type":"image/jpeg"},{"b64":null,"done":true,"name":"image.jpg","type":"image/jpeg"},{"done":false}],"email":"williansilva874.ws@gmail.com","end":"Rua mae catira 154 cataratas","id":1776704495051,"imei1":"Nao achei a opção no celular","imei2":"","lido":false,"lj_id":1776695968720,"lj_nome":"MELEVACELL","mae":"Andreia Alves dos Santos","marca":"Apple","modelo":"Iphone 17 pro max 512gb","nasc":"2004-07-08","neg":"Não, nome limpo","nome":"Willian Gabriel da Silva","obs_ap":"","prof":"Auxiliar administrativo","renda":"R$ 2.100,00","rg":"144380452","tel":"45988133318","tempo":"1 a 2 anos","tipo":"Celular","valor":"R$ 12.000,00","vinc":"CLT registrado"},{"cep":"85804220","cor":"Indiferente","cpf":"09894784917","data":"20/04, 14:22","docs":[null,{"b64":null,"done":true,"name":"image.jpg","type":"image/jpeg"},{"b64":null,"done":true,"name":"image.jpg","type":"image/jpeg"},{"b64":null,"done":true,"name":"image.jpg","type":"image/jpeg"},{"b64":null,"done":true,"name":"image.jpg","type":"image/jpeg"}],"email":"souzanatha66@gmail.com","end":"Rua dos narcisos 1146","id":1776705724364,"imei1":"","imei2":"","lido":false,"lj_id":1776695968720,"lj_nome":"MELEVACELL","mae":"SALETE RIBEIRO DE CRISTO DE SOUZA","marca":"Apple","modelo":"iPhone 16 ou 17","nasc":"1999-03-09","neg":"Não sei","nome":"Judson Nathã de souza","obs_ap":"NÃO CONSIGUI O COMPROVANTE DE ENDEREÇO NO MOMENTO POSSO ENVIAR MAIS TARDE","prof":"Vendedor","renda":"R$ 3300","rg":"138983986","tel":"45999807863","tempo":"6 meses a 1 ano","tipo":"Celular","valor":"R$ 4000","vinc":"CLT registrado"},{"cep":"85804250","cor":"Cinza","cpf":"09597229986","data":"20/04, 15:38","docs":[null,{"b64":null,"done":true,"name":"image.jpg","type":"image/jpeg"},{"b64":null,"done":true,"name":"image.jpg","type":"image/jpeg"},{"b64":null,"done":true,"name":"image.jpg","type":"image/jpeg"},{"done":false}],"email":"guilhermekurpel@icloud.com","end":"Rua manjericão 724","id":1776710318066,"imei1":"","imei2":"","lido":false,"lj_id":1776695968720,"lj_nome":"MELEVACELL","mae":"Célia Roque dos Santos","marca":"iPhone","modelo":"16 pro","nasc":"1995-09-15","neg":"Sim","nome":"Guilherme dos Santos","obs_ap":"","prof":"Autônomo","renda":"R$ 2900","rg":"110792654","tel":"45998319000","tempo":"Menos de 6 meses","tipo":"Celular","valor":"R$ 4000","vinc":"Autônomo"},{"cep":"85806-070","cor":"Preto","cpf":"012.108.182-64","data":"20/04, 17:48","docs":[null,{"b64":null,"done":true,"name":"webview_tmp_file3527709409953841340.jpg","type":"image/jpeg"},{"b64":null,"done":true,"name":"webview_tmp_file8638643086942572138.jpg","type":"image/jpeg"},{"b64":null,"done":true,"name":"webview_tmp_file1170539436168553673.jpg","type":"image/jpeg"},{"b64":null,"done":true,"name":"webview_tmp_file8238212296822307640.jpg","type":"image/jpeg"}],"email":"solrodriguesdino@gmail.com","end":"Rua barawanas ap 23","id":1776718124074,"imei1":"","imei2":"","lido":false,"lj_id":1776695968720,"lj_nome":"MELEVACELL","mae":"Ana Maria  Rodrigues","marca":"Samsung","modelo":"A53","nasc":"1990-07-20","neg":"Não, nome limpo","nome":"Andelison Rodrigues de sousa","obs_ap":"Não","prof":"Soldador","renda":"R$ 4.000","rg":"162754491","tel":"45 99852-2979","tempo":"2 a 5 anos","tipo":"Celular","valor":"R$ 2000","vinc":"CLT registrado"},{"cep":"85817390","cor":"","cpf":"09131597947","data":"20/04, 19:43","docs":[null,{"b64":null,"done":true,"name":"CNH-e.pdf","type":"application/pdf"},{"b64":null,"done":true,"name":"CNH-e.pdf","type":"application/pdf"},{"b64":null,"done":true,"name":"WhatsApp Image 2026-04-20 at 19.42.40.jpeg","type":"image/jpeg"},{"b64":null,"done":true,"name":"FaturaCopel.pdf","type":"application/pdf"}],"email":"alinegrealinegrebinsky@gmail.com","end":"rua toledo 435, casa 06","id":1776725024428,"imei1":"","imei2":"","lido":false,"lj_id":1776695968720,"lj_nome":"MELEVACELL","mae":"roseli dos santos","marca":"iphone","modelo":"14 pro","nasc":"1995-08-29","neg":"Sim","nome":"aline dos santos grebinsky chamerk","obs_ap":"cor indiferente","prof":"coordenador administrativo","renda":"R$ 5.180,00","rg":"108106387","tel":"45998050194","tempo":"Mais de 5 anos","tipo":"Celular","valor":"R$ 4000,00","vinc":"CLT registrado"},{"cep":"85817390","cor":"PRETO","cpf":"07535474900","data":"20/04, 19:50","docs":[null,{"b64":null,"done":true,"name":"CNH Digital JUNIOR .pdf","type":"application/pdf"},{"b64":null,"done":true,"name":"CNH Digital JUNIOR .pdf","type":"application/pdf"},{"b64":null,"done":true,"name":"FOLHA PAG. JUNIOR .jpeg","type":"image/jpeg"},{"b64":null,"done":true,"name":"sanepar_1776725000444.pdf","type":"application/pdf"}],"email":"junior.chamerk@gmail.com","end":"RUA TOLEDO 435 - CASA 06","id":1776725418359,"imei1":"","imei2":"","lido":false,"lj_id":1776695968720,"lj_nome":"MELEVACELL","mae":"LEONICE EVANGELISTA DA SILVA","marca":"IPHONE","modelo":"14 PRO","nasc":"1991-04-11","neg":"Sim","nome":"ALOIS CHAMERK DA SILVA JUNIOR","obs_ap":"COR PRETO OU CINZA","prof":"SUPERVISOR","renda":"R$ 3500","rg":"89991757","tel":"45999831828","tempo":"1 a 2 anos","tipo":"Celular","valor":"R$ 4.000,00","vinc":"CLT registrado"}],"ramo":"celulares","resp":"WELLYNTON MARLON","senha":"123456"}]};
+var DB_DEFAULT = {"analistas":[{"ativo":true,"email":"admin@boletopay.com.br","id":1,"nome":"Admin BOLETO PAY","role":"admin","senha":"admin123"},{"ativo":true,"email":"ana@boletopay.com.br","id":2,"nome":"Ana Souza","role":"analista","senha":"ana123"},{"ativo":true,"email":"carlos@boletopay.com.br","id":3,"nome":"Carlos Lima","role":"analista","senha":"carlos123"}],"lojistas":[{"ativo":true,"cidade":"Cascavel - PR","email":"financeiro@eletro360.com.br","id":101,"nome":"Eletro 360","ramo":"celulares","resp":"Marcos Rocha","senha":"eletro123","props":[]},{"ativo":true,"cidade":"Foz do Iguaçu - PR","email":"contato@mobispeed.com.br","id":102,"nome":"MobiSpeed","ramo":"mobilidade","resp":"Felipe Prado","senha":"mobi123","props":[]},{"ativo":true,"cidade":"—","cnpj":"","email":"beltrao","id":1776516689298,"modulos":["celular","moto","pessoal"],"nome":"beltrao","props":[{"banco":"—","cep":"","cor":"","cpf":"08878999946","data":"18/04, 09:59","docs":[null,{"done":true,"name":"WhatsApp Image 2026-04-14 at 18.57.46.jpeg","type":"image/jpeg"},{"done":true,"name":"WhatsApp Image 2026-04-14 at 18.57.46.jpeg","type":"image/jpeg"},{"done":true,"name":"WhatsApp Image 2026-04-14 at 18.57.46.jpeg","type":"image/jpeg"},{"done":true,"name":"WhatsApp Image 2026-04-14 at 18.57.46.jpeg","type":"image/jpeg"}],"email":"","end":"","id":1776517140036,"imei1":"","imei2":"","lido":true,"lj_id":1776516689298,"lj_nome":"beltrao","mae":"","marca":"","modal":"—","modelo":"17","nasc":"1996-07-24","neg":"Não, nome limpo","nome":"wellynton marlon","obs_ap":"","obs_res":"","parcelas":"—","prof":"empresario","renda":"R$ 50000","resultado":"Negado","rg":"5621651651","tel":"45999231703","tempo":"Menos de 6 meses","tipo":"Celular","valor":"R$ 7500","valorAprov":"Negado","vinc":"CLT registrado"},{"cep":"","cond":"Novo (lacrado)","cor":"","cpf":"—","data":"09/05, 01:38","docs":[null,{"done":false},{"done":false},{"done":false},{"done":false}],"email":"","end":"","id":1778301538481,"imei1":"—","imei2":"","lido":false,"lj_id":1776516689298,"lj_nome":"beltrao","mae":"","marca":"","modelo":"—","nasc":"","neg":"Não, nome limpo","nome":"marlonm","obs_ap":"","prof":"","renda":"R$ —","rg":"","serial":"","tel":"","tempo":"Menos de 6 meses","tipo":"Celular","valor":"R$ —","vinc":"CLT registrado"}],"ramo":"celulares","resp":"—","senha":"123456","tel":""},{"ativo":true,"cidade":"CASCAVEL PARANA","email":"melevacell","id":1776695968720,"nome":"MELEVACELL","props":[{"cep":"85819120","cor":"","cpf":"07996536910","data":"20/04, 11:29","docs":[null,{"b64":null,"done":true,"name":"image.jpg","type":"image/jpeg"},{"b64":null,"done":true,"name":"image.jpg","type":"image/jpeg"},{"b64":null,"done":true,"name":"image.jpg","type":"image/jpeg"},{"done":false}],"email":"matheus56@icloud.com","end":"Ciências sociais","id":1776698994782,"imei1":"","imei2":"","lido":false,"lj_id":1776695968720,"lj_nome":"MELEVACELL","mae":"Maria Inês de Lima","marca":"iPhone","modelo":"17","nasc":"1996-09-30","neg":"Não sei","nome":"Matheus Anderson de Lima da Silva","obs_ap":"Gostaria de dar um 15 pro max 512gb","prof":"Motorista","renda":"R$ 5000","rg":"127791201","tel":"45998311186","tempo":"2 a 5 anos","tipo":"Celular","valor":"R$ 8000","vinc":"CLT registrado"},{"cep":"85820899","cor":"","cpf":"04338018160","data":"20/04, 12:53","docs":[null,{"b64":null,"done":true,"name":"webview_tmp_file5794985973451329052.jpg","type":"image/jpeg"},{"b64":null,"done":true,"name":"webview_tmp_file6101388081277665369.jpg","type":"image/jpeg"},{"b64":null,"done":true,"name":"webview_tmp_file675032630820534055.jpg","type":"image/jpeg"},{"b64":null,"done":true,"name":"webview_tmp_file3449190193953621359.jpg","type":"image/jpeg"}],"email":"bia.nc@hotmail.com","end":"Br 369 km514","id":1776700394052,"imei1":"*#06#","imei2":"","lido":false,"lj_id":1776695968720,"lj_nome":"MELEVACELL","mae":"Suely Neres Cardoso","marca":"iPhone","modelo":"16 pró","nasc":"1990-03-27","neg":"Sim","nome":"Abiatar Neres de Oliveira","obs_ap":"Precisava de um aparelho em boas condições, não precisa ser novo, é presente para minha filha.","prof":"Recepcionista ADM/ Vendedora","renda":"R$ 3.500,00","rg":"001826481","tel":"45991166761","tempo":"1 a 2 anos","tipo":"Celular","valor":"R$ 3.500","vinc":"CLT registrado"},{"cep":"85817020","cor":"Preto","cpf":"05660694900","data":"20/04, 12:54","docs":[null,{"b64":null,"done":true,"name":"image.jpg","type":"image/jpeg"},{"b64":null,"done":true,"name":"image.jpg","type":"image/jpeg"},{"b64":null,"done":true,"name":"image.jpg","type":"image/jpeg"},{"b64":null,"done":true,"name":"image.jpg","type":"image/jpeg"}],"email":"Nilcelima838@gmail.com","end":"Rua Ipanema 384","id":1776700485735,"imei1":"358691738674070","imei2":"","lido":false,"lj_id":1776695968720,"lj_nome":"MELEVACELL","mae":"Irene Natália de Oliveira","marca":"iPhone","modelo":"IPhone 15 pro max","nasc":"1983-10-23","neg":"Sim","nome":"Nilce Lima","obs_ap":"","prof":"Auxiliar de cozinha","renda":"R$ 1.900","rg":"99384360","tel":"45998186190","tempo":"1 a 2 anos","tipo":"Celular","valor":"R$ 5000","vinc":"CLT registrado"},{"cep":"85806010","cor":"Banco","cpf":"08965939917","data":"20/04, 12:57","docs":[null,{"b64":null,"done":true,"name":"image.jpg","type":"image/jpeg"},{"b64":null,"done":true,"name":"image.jpg","type":"image/jpeg"},{"b64":null,"done":true,"name":"image.jpg","type":"image/jpeg"},{"done":false}],"email":"laryferoli7@gnail.com","end":"Rua apnajes","id":1776700663962,"imei1":"*#06#","imei2":"","lido":false,"lj_id":1776695968720,"lj_nome":"MELEVACELL","mae":"Viviane Maria Oliveira","marca":"iPhone","modelo":"17 pro Max","nasc":"1994-07-06","neg":"Sim","nome":"Larissa Fernanda Oliveira","obs_ap":"","prof":"Vendedora","renda":"R$ 1.518","rg":"126275455","tel":"45988428548","tempo":"1 a 2 anos","tipo":"Celular","valor":"R$ 500,00","vinc":"CLT registrado"},{"cep":"85806030","cor":"Tanto faz","cpf":"09597086930","data":"20/04, 13:07","docs":[null,{"b64":null,"done":true,"name":"image.jpg","type":"image/jpeg"},{"b64":null,"done":true,"name":"image.jpg","type":"image/jpeg"},{"b64":null,"done":true,"name":"image.jpg","type":"image/jpeg"},{"b64":null,"done":true,"name":"image.jpg","type":"image/jpeg"}],"email":"viecellidellabettac@gmail.com","end":"Rua Txikaos","id":1776701236712,"imei1":"","imei2":"","lido":false,"lj_id":1776695968720,"lj_nome":"MELEVACELL","mae":"Loreni Aparecida da Silva","marca":"iPhone","modelo":"14","nasc":"1996-05-10","neg":"Sim","nome":"Claudionara viecelli della betta","obs_ap":"Tenho um iPhone 11 de 256 gb para dar na troca","prof":"Secretaria","renda":"R$ 2000","rg":"123208803","tel":"45998292854","tempo":"Menos de 6 meses","tipo":"Celular","valor":"R$ 3000","vinc":"Autônomo"},{"cep":"85806060","cor":"Branco","cpf":"11523266945","data":"20/04, 13:09","docs":[null,{"b64":null,"done":true,"name":"image.jpg","type":"image/jpeg"},{"b64":null,"done":true,"name":"image.jpg","type":"image/jpeg"},{"b64":null,"done":true,"name":"image.jpg","type":"image/jpeg"},{"b64":null,"done":true,"name":"image.jpg","type":"image/jpeg"}],"email":"brunaalexandro@outlook.com","end":"Apalais,1210 - Santa Cruz","id":1776701394102,"imei1":"","imei2":"","lido":false,"lj_id":1776695968720,"lj_nome":"MELEVACELL","mae":"Fabiana da Silva Morais de Lima","marca":"iPhone","modelo":"15 Promax","nasc":"1999-01-25","neg":"Sim","nome":"Bruna Morais de Lima Silva","obs_ap":"Indiferente de cor, pode ser um iPhone 15 ou 16","prof":"Vendedor","renda":"R$ 3.500,00","rg":"11523266945","tel":"45998125420","tempo":"6 meses a 1 ano","tipo":"Celular","valor":"R$ 4.500,00","vinc":"CLT registrado"},{"cep":"85824000","cor":"Preto","cpf":"13298829978","data":"20/04, 13:20","docs":[null,{"b64":null,"done":true,"name":"image.jpg","type":"image/jpeg"},{"b64":null,"done":true,"name":"image.jpg","type":"image/jpeg"},{"b64":null,"done":true,"name":"image.jpg","type":"image/jpeg"},{"b64":null,"done":true,"name":"image.jpg","type":"image/jpeg"}],"email":"adryelcamargo258@gmail","end":"Linha zanotto Pinhalzinho","id":1776702015645,"imei1":"","imei2":"","lido":false,"lj_id":1776695968720,"lj_nome":"MELEVACELL","mae":"Deysemar Pereira de Mendonça","marca":"Iphone","modelo":"Iphone 14","nasc":"2003-05-30","neg":"Não sei","nome":"Adryel Mendonça de Camargo","obs_ap":"","prof":"Trabalhador rural","renda":"R$ 3750","rg":"147015992","tel":"+5545999087649","tempo":"2 a 5 anos","tipo":"Celular","valor":"R$ 3000","vinc":"CLT registrado"},{"cep":"85818410","cor":"Preto","cpf":"11690472979","data":"20/04, 13:23","docs":[null,{"b64":null,"done":true,"name":"image.jpg","type":"image/jpeg"},{"b64":null,"done":true,"name":"image.jpg","type":"image/jpeg"},{"b64":null,"done":true,"name":"image.jpg","type":"image/jpeg"},{"b64":null,"done":true,"name":"image.jpg","type":"image/jpeg"}],"email":"milenazenigarcia@gmail.com","end":"Rua Veneza 845","id":1776702199954,"imei1":"","imei2":"","lido":false,"lj_id":1776695968720,"lj_nome":"MELEVACELL","mae":"Márcia Maria Zeni","marca":"Apple","modelo":"Apple Watch","nasc":"2004-07-25","neg":"Sim","nome":"Milena Kamily Zeni Garcia","obs_ap":"","prof":"Assistente administrativo I","renda":"R$ 2400","rg":"142806193","tel":"45998131403","tempo":"1 a 2 anos","tipo":"Celular","valor":"R$ 2000","vinc":"CLT registrado"},{"cep":"85806660","cor":"Azul","cpf":"08844583933","data":"20/04, 13:33","docs":[null,{"b64":null,"done":true,"name":"image.jpg","type":"image/jpeg"},{"b64":null,"done":true,"name":"image.jpg","type":"image/jpeg"},{"b64":null,"done":true,"name":"image.jpg","type":"image/jpeg"},{"b64":null,"done":true,"name":"image.jpg","type":"image/jpeg"}],"email":"josehbcoimbra@hotmail.com","end":"Rua Ametista, 975 - Siena","id":1776702794557,"imei1":"*#06#","imei2":"","lido":false,"lj_id":1776695968720,"lj_nome":"MELEVACELL","mae":"Sônia de Fátima Becker Coimbra","marca":"Apple","modelo":"iPhone 17 PRO","nasc":"1997-06-16","neg":"Sim","nome":"José Henrique Becker Coimbra","obs_ap":"Restante do valor darei no dinheiro","prof":"Auxiliar de laboratorio","renda":"R$ 5000","rg":"128472916","tel":"45998188619","tempo":"Mais de 5 anos","tipo":"Celular","valor":"R$ 4000","vinc":"CLT registrado"},{"cep":"87303030","cor":"Preto","cpf":"08030060980","data":"20/04, 13:44","docs":[null,{"b64":null,"done":true,"name":"image.jpg","type":"image/jpeg"},{"b64":null,"done":true,"name":"image.jpg","type":"image/jpeg"},{"b64":null,"done":true,"name":"image.jpg","type":"image/jpeg"},{"b64":null,"done":true,"name":"image.jpg","type":"image/jpeg"}],"email":"lukinha_henriqe@hotmail.com","end":"Rua Belem","id":1776703447991,"imei1":"","imei2":"","lido":false,"lj_id":1776695968720,"lj_nome":"MELEVACELL","mae":"Cristiana Francisco de Oliveira","marca":"iPhone","modelo":"iPhone 15","nasc":"1994-09-23","neg":"Sim","nome":"Lucas Henrique da Silva","obs_ap":"","prof":"Alimentador de Produção","renda":"R$ 3.000","rg":"124333865","tel":"(44) 999504726","tempo":"Mais de 5 anos","tipo":"Celular","valor":"R$ 3000","vinc":"CLT registrado"},{"cep":"85818745","cor":"Branco","cpf":"11899462970","data":"20/04, 14:01","docs":[null,{"b64":null,"done":true,"name":"image.jpg","type":"image/jpeg"},{"b64":null,"done":true,"name":"image.jpg","type":"image/jpeg"},{"b64":null,"done":true,"name":"image.jpg","type":"image/jpeg"},{"done":false}],"email":"williansilva874.ws@gmail.com","end":"Rua mae catira 154 cataratas","id":1776704495051,"imei1":"Nao achei a opção no celular","imei2":"","lido":false,"lj_id":1776695968720,"lj_nome":"MELEVACELL","mae":"Andreia Alves dos Santos","marca":"Apple","modelo":"Iphone 17 pro max 512gb","nasc":"2004-07-08","neg":"Não, nome limpo","nome":"Willian Gabriel da Silva","obs_ap":"","prof":"Auxiliar administrativo","renda":"R$ 2.100,00","rg":"144380452","tel":"45988133318","tempo":"1 a 2 anos","tipo":"Celular","valor":"R$ 12.000,00","vinc":"CLT registrado"},{"cep":"85804220","cor":"Indiferente","cpf":"09894784917","data":"20/04, 14:22","docs":[null,{"b64":null,"done":true,"name":"image.jpg","type":"image/jpeg"},{"b64":null,"done":true,"name":"image.jpg","type":"image/jpeg"},{"b64":null,"done":true,"name":"image.jpg","type":"image/jpeg"},{"b64":null,"done":true,"name":"image.jpg","type":"image/jpeg"}],"email":"souzanatha66@gmail.com","end":"Rua dos narcisos 1146","id":1776705724364,"imei1":"","imei2":"","lido":false,"lj_id":1776695968720,"lj_nome":"MELEVACELL","mae":"SALETE RIBEIRO DE CRISTO DE SOUZA","marca":"Apple","modelo":"iPhone 16 ou 17","nasc":"1999-03-09","neg":"Não sei","nome":"Judson Nathã de souza","obs_ap":"NÃO CONSIGUI O COMPROVANTE DE ENDEREÇO NO MOMENTO POSSO ENVIAR MAIS TARDE","prof":"Vendedor","renda":"R$ 3300","rg":"138983986","tel":"45999807863","tempo":"6 meses a 1 ano","tipo":"Celular","valor":"R$ 4000","vinc":"CLT registrado"},{"cep":"85804250","cor":"Cinza","cpf":"09597229986","data":"20/04, 15:38","docs":[null,{"b64":null,"done":true,"name":"image.jpg","type":"image/jpeg"},{"b64":null,"done":true,"name":"image.jpg","type":"image/jpeg"},{"b64":null,"done":true,"name":"image.jpg","type":"image/jpeg"},{"done":false}],"email":"guilhermekurpel@icloud.com","end":"Rua manjericão 724","id":1776710318066,"imei1":"","imei2":"","lido":false,"lj_id":1776695968720,"lj_nome":"MELEVACELL","mae":"Célia Roque dos Santos","marca":"iPhone","modelo":"16 pro","nasc":"1995-09-15","neg":"Sim","nome":"Guilherme dos Santos","obs_ap":"","prof":"Autônomo","renda":"R$ 2900","rg":"110792654","tel":"45998319000","tempo":"Menos de 6 meses","tipo":"Celular","valor":"R$ 4000","vinc":"Autônomo"},{"cep":"85806-070","cor":"Preto","cpf":"012.108.182-64","data":"20/04, 17:48","docs":[null,{"b64":null,"done":true,"name":"webview_tmp_file3527709409953841340.jpg","type":"image/jpeg"},{"b64":null,"done":true,"name":"webview_tmp_file8638643086942572138.jpg","type":"image/jpeg"},{"b64":null,"done":true,"name":"webview_tmp_file1170539436168553673.jpg","type":"image/jpeg"},{"b64":null,"done":true,"name":"webview_tmp_file8238212296822307640.jpg","type":"image/jpeg"}],"email":"solrodriguesdino@gmail.com","end":"Rua barawanas ap 23","id":1776718124074,"imei1":"","imei2":"","lido":false,"lj_id":1776695968720,"lj_nome":"MELEVACELL","mae":"Ana Maria  Rodrigues","marca":"Samsung","modelo":"A53","nasc":"1990-07-20","neg":"Não, nome limpo","nome":"Andelison Rodrigues de sousa","obs_ap":"Não","prof":"Soldador","renda":"R$ 4.000","rg":"162754491","tel":"45 99852-2979","tempo":"2 a 5 anos","tipo":"Celular","valor":"R$ 2000","vinc":"CLT registrado"},{"cep":"85817390","cor":"","cpf":"09131597947","data":"20/04, 19:43","docs":[null,{"b64":null,"done":true,"name":"CNH-e.pdf","type":"application/pdf"},{"b64":null,"done":true,"name":"CNH-e.pdf","type":"application/pdf"},{"b64":null,"done":true,"name":"WhatsApp Image 2026-04-20 at 19.42.40.jpeg","type":"image/jpeg"},{"b64":null,"done":true,"name":"FaturaCopel.pdf","type":"application/pdf"}],"email":"alinegrealinegrebinsky@gmail.com","end":"rua toledo 435, casa 06","id":1776725024428,"imei1":"","imei2":"","lido":false,"lj_id":1776695968720,"lj_nome":"MELEVACELL","mae":"roseli dos santos","marca":"iphone","modelo":"14 pro","nasc":"1995-08-29","neg":"Sim","nome":"aline dos santos grebinsky chamerk","obs_ap":"cor indiferente","prof":"coordenador administrativo","renda":"R$ 5.180,00","rg":"108106387","tel":"45998050194","tempo":"Mais de 5 anos","tipo":"Celular","valor":"R$ 4000,00","vinc":"CLT registrado"},{"cep":"85817390","cor":"PRETO","cpf":"07535474900","data":"20/04, 19:50","docs":[null,{"b64":null,"done":true,"name":"CNH Digital JUNIOR .pdf","type":"application/pdf"},{"b64":null,"done":true,"name":"CNH Digital JUNIOR .pdf","type":"application/pdf"},{"b64":null,"done":true,"name":"FOLHA PAG. JUNIOR .jpeg","type":"image/jpeg"},{"b64":null,"done":true,"name":"sanepar_1776725000444.pdf","type":"application/pdf"}],"email":"junior.chamerk@gmail.com","end":"RUA TOLEDO 435 - CASA 06","id":1776725418359,"imei1":"","imei2":"","lido":false,"lj_id":1776695968720,"lj_nome":"MELEVACELL","mae":"LEONICE EVANGELISTA DA SILVA","marca":"IPHONE","modelo":"14 PRO","nasc":"1991-04-11","neg":"Sim","nome":"ALOIS CHAMERK DA SILVA JUNIOR","obs_ap":"COR PRETO OU CINZA","prof":"SUPERVISOR","renda":"R$ 3500","rg":"89991757","tel":"45999831828","tempo":"1 a 2 anos","tipo":"Celular","valor":"R$ 4.000,00","vinc":"CLT registrado"}],"ramo":"celulares","resp":"WELLYNTON MARLON","senha":"123456"},{"ativo":true,"cidade":"—","cnpj":"","email":"wellynton","id":1778304041068,"modulos":["celular","moto","pessoal"],"nome":"wellynton","ramo":"celulares","resp":"—","senha":"123456","tel":"","props":[]}]};
 
 var DB = JSON.parse(JSON.stringify(DB_DEFAULT));
 
@@ -424,7 +410,7 @@ carregarDB();
 <!-- ======== PORTAL ======== -->
 <div class="scr on" id="s-portal">
   <div class="pw">
-    <div style="width:100%;max-width:500px">
+    <div style="width:100%;max-width:500px;position:relative;z-index:1">
       <div style="display:flex;align-items:center;gap:12px;justify-content:center;margin-bottom:2.75rem">
         <svg width="48" height="48" viewBox="0 0 48 48"><rect width="48" height="48" rx="14" fill="#0A84FF"/><text x="50%" y="56%" dominant-baseline="middle" text-anchor="middle" fill="#fff" font-size="20" font-weight="700" font-family="Arial">BP</text></svg>
         <span style="font-size:26px;font-weight:700;color:#fff">BOLETO PAY</span>
@@ -969,14 +955,19 @@ carregarDB();
           <div><label class="fl">E-mail de acesso *</label><input class="fi" id="nl-email" type="email" placeholder="financeiro@loja.com.br"/></div>
           <div><label class="fl">Senha de acesso *</label><input class="fi" id="nl-senha" type="text" placeholder="Mínimo 6 caracteres"/></div>
         </div>
-        <div class="al al-bl" style="margin-bottom:1.25rem;font-size:13px;color:#0C447C">
+        <div class="al al-bl" style="margin-bottom:1.25rem;font-size:13px">
           O lojista acessa o portal com e-mail e senha. Comunique as credenciais após cadastro.
         </div>
-        <div class="ctit" style="margin-top:.375rem">Módulos permitidos *</div>
-        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:1.25rem">
-          <label id="nl-lbl-celular" style="display:flex;align-items:center;gap:8px;padding:10px 12px;border:1.5px solid var(--brd);border-radius:10px;cursor:pointer;font-size:13px"><input type="checkbox" id="nl-mod-celular" value="celular" style="accent-color:var(--bp);width:15px;height:15px"/> 📱 Celulares</label>
-          <label id="nl-lbl-moto" style="display:flex;align-items:center;gap:8px;padding:10px 12px;border:1.5px solid var(--brd);border-radius:10px;cursor:pointer;font-size:13px"><input type="checkbox" id="nl-mod-moto" value="moto" style="accent-color:var(--bp);width:15px;height:15px"/> ⚡ Mobilidade</label>
-          <label id="nl-lbl-pessoal" style="display:flex;align-items:center;gap:8px;padding:10px 12px;border:1.5px solid var(--brd);border-radius:10px;cursor:pointer;font-size:13px"><input type="checkbox" id="nl-mod-pessoal" value="pessoal" style="accent-color:var(--bp);width:15px;height:15px"/> 💳 Crédito Pessoal</label>
+        <div class="ctit" style="margin-top:.5rem">Tipos de crédito liberados *</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:1.25rem">
+          <label id="nl-lbl-clt" style="display:flex;align-items:center;gap:10px;padding:12px 14px;border:1.5px solid var(--brd);border-radius:10px;cursor:pointer;font-size:13px;color:var(--txt);transition:.15s">
+            <input type="checkbox" id="nl-mod-clt" value="clt" style="accent-color:var(--bp);width:16px;height:16px;flex-shrink:0"/>
+            <div><div style="font-weight:600">💳 Crédito CLT</div><div style="font-size:11px;color:var(--mu);margin-top:2px">Empréstimo pessoal para CLT</div></div>
+          </label>
+          <label id="nl-lbl-celular" style="display:flex;align-items:center;gap:10px;padding:12px 14px;border:1.5px solid var(--brd);border-radius:10px;cursor:pointer;font-size:13px;color:var(--txt);transition:.15s">
+            <input type="checkbox" id="nl-mod-celular" value="celular" style="accent-color:var(--bp);width:16px;height:16px;flex-shrink:0"/>
+            <div><div style="font-weight:600">📱 Venda no Boleto</div><div style="font-size:11px;color:var(--mu);margin-top:2px">Celular/eletrônico parcelado</div></div>
+          </label>
         </div>
         <div style="display:flex;gap:10px;justify-content:flex-end">
           <button class="btn-ghost" onclick="go('s-lojistas-mgr')">Cancelar</button>
@@ -1041,21 +1032,27 @@ carregarDB();
           </div>
           <!-- TOGGLE VER SENHA -->
           <div style="display:flex;align-items:center;gap:8px;margin-bottom:.5rem">
-            <input type="checkbox" id="el-ver-senha"  style="accent-color:var(--bp);width:15px;height:15px" onchange="toggleVerSenha()"/>
+            <input type="checkbox" id="el-ver-senha" style="accent-color:var(--bp);width:15px;height:15px" onchange="toggleVerSenha()"/>
             <label for="el-ver-senha" style="font-size:12px;color:var(--mu);cursor:pointer">Mostrar senha atual ao salvar</label>
           </div>
         </div>
 
         <div class="card" style="margin-bottom:14px">
-          <div class="ctit">Módulos permitidos</div>
-          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px">
-            <label id="el-lbl-celular" style="display:flex;align-items:center;gap:8px;padding:10px 12px;border:1.5px solid var(--brd);border-radius:10px;cursor:pointer;font-size:13px"><input type="checkbox" id="el-mod-celular" value="celular" style="accent-color:var(--bp);width:15px;height:15px"/> 📱 Celulares</label>
-            <label id="el-lbl-moto" style="display:flex;align-items:center;gap:8px;padding:10px 12px;border:1.5px solid var(--brd);border-radius:10px;cursor:pointer;font-size:13px"><input type="checkbox" id="el-mod-moto" value="moto" style="accent-color:var(--bp);width:15px;height:15px"/> ⚡ Mobilidade</label>
-            <label id="el-lbl-pessoal" style="display:flex;align-items:center;gap:8px;padding:10px 12px;border:1.5px solid var(--brd);border-radius:10px;cursor:pointer;font-size:13px"><input type="checkbox" id="el-mod-pessoal" value="pessoal" style="accent-color:var(--bp);width:15px;height:15px"/> 💳 Crédito Pessoal</label>
+          <div class="ctit">Tipos de crédito liberados</div>
+          <div style="font-size:12px;color:var(--mu);margin-bottom:12px">Selecione quais produtos este parceiro pode oferecer.</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+            <label id="el-lbl-clt" style="display:flex;align-items:center;gap:10px;padding:12px 14px;border:1.5px solid var(--brd);border-radius:10px;cursor:pointer;font-size:13px;color:var(--txt);transition:.15s">
+              <input type="checkbox" id="el-mod-clt" value="clt" style="accent-color:var(--bp);width:16px;height:16px;flex-shrink:0"/>
+              <div><div style="font-weight:600">💳 Crédito CLT</div><div style="font-size:11px;color:var(--mu);margin-top:2px">Empréstimo pessoal</div></div>
+            </label>
+            <label id="el-lbl-celular" style="display:flex;align-items:center;gap:10px;padding:12px 14px;border:1.5px solid var(--brd);border-radius:10px;cursor:pointer;font-size:13px;color:var(--txt);transition:.15s">
+              <input type="checkbox" id="el-mod-celular" value="celular" style="accent-color:var(--bp);width:16px;height:16px;flex-shrink:0"/>
+              <div><div style="font-weight:600">📱 Venda no Boleto</div><div style="font-size:11px;color:var(--mu);margin-top:2px">Celular/eletrônico</div></div>
+            </label>
           </div>
         </div>
 
-        <div class="card" style="margin-bottom:14px;border-color:rgba(204,47,40,.2)">
+        <div class="card" style="margin-bottom:14px;border-color:rgba(255,68,68,.15)">
           <div class="ctit" style="color:var(--rd);border-bottom-color:var(--rdl)">Zona de perigo</div>
           <div style="display:flex;align-items:center;justify-content:space-between">
             <div>
@@ -1831,15 +1828,14 @@ function salvarConfig(){
 /* ========== LINK / FORMULÁRIO CLIENTE ========== */
 function mostrarLink(){
   if(!meLj)return;
-  var base='https://boletopaybrasil.github.io/boletopay';
-  if(window.location.hostname!=='boletopaybrasil.github.io'){
+  var base='https://boletoopaybrasil.github.io/boletopay';
+  if(window.location.hostname!=='boletoopaybrasil.github.io'){
     base=window.location.href.split('/').slice(0,-1).join('/').replace(/\/index\.html$/,'');
   }
   var mods=meLj.modulos&&meLj.modulos.length>0?meLj.modulos:['celular'];
   var cfgs={
-    celular:{label:'📱 Celulares',file:'form.html'},
-    moto:{label:'⚡ Mobilidade',file:'form.html'},
-    pessoal:{label:'💳 Crédito Pessoal',file:'form-pessoal.html'}
+    clt:{label:'💳 Crédito CLT',desc:'Empréstimo pessoal — sem dados de aparelho',file:'form-pessoal.html'},
+    celular:{label:'📱 Venda no Boleto',desc:'Celular/eletrônico parcelado — com dados do aparelho',file:'form.html'}
   };
   var _links={};
   var box=document.getElementById('link-modal-tipos');
@@ -1849,23 +1845,23 @@ function mostrarLink(){
       var c=cfgs[m];if(!c)return;
       var link=base+'/'+c.file+'?loja='+meLj.id+'&nome='+encodeURIComponent(meLj.nome);
       _links[m]=link;
-      var wamsg='Olá! Preencha seus dados para análise de crédito:\n\n'+link;
+      var wamsg='Olá! Preencha seus dados para solicitação de crédito:\n\n'+link;
       var waurl='https://wa.me/?text='+encodeURIComponent(wamsg);
-      html+='<div style="border:1px solid var(--brd);border-radius:10px;padding:.875rem;margin-bottom:10px;background:var(--sec)">'
-        +'<div style="font-size:13px;font-weight:700;margin-bottom:6px">'+c.label+'</div>'
-        +'<div style="font-size:11px;font-family:monospace;color:var(--bp);word-break:break-all;padding:6px;border-radius:6px;margin-bottom:8px;background:rgba(0,0,0,.1)">'+link+'</div>'
+      html+='<div style="border:1px solid var(--brd);border-radius:12px;padding:1rem;margin-bottom:10px;background:var(--sec)">'
+        +'<div style="font-size:14px;font-weight:700;margin-bottom:3px">'+c.label+'</div>'
+        +'<div style="font-size:12px;color:var(--mu);margin-bottom:10px">'+c.desc+'</div>'
+        +'<div style="font-size:11px;font-family:monospace;color:var(--bp);word-break:break-all;padding:8px;border-radius:8px;margin-bottom:8px;background:rgba(0,0,0,.2)">'+link+'</div>'
         +'<div style="display:flex;gap:8px">'
-        +'<button id="btn-cp-'+m+'" style="flex:1;padding:8px;background:var(--sec);border:1px solid var(--brd);border-radius:8px;cursor:pointer;font-size:12px;color:var(--txt)">📋 Copiar</button>'
-        +'<a href="'+waurl+'" target="_blank" rel="noopener" style="flex:1;padding:8px;background:#25D366;color:#fff;border-radius:8px;font-size:12px;font-weight:600;text-align:center;text-decoration:none">💬 WhatsApp</a>'
+        +'<button id="btn-cp-'+m+'" style="flex:1;padding:9px;background:var(--sec);border:1px solid var(--brd);border-radius:8px;cursor:pointer;font-size:12px;color:var(--txt);font-weight:500">📋 Copiar link</button>'
+        +'<a href="'+waurl+'" target="_blank" rel="noopener" style="flex:1;padding:9px;background:#25D366;color:#fff;border-radius:8px;font-size:12px;font-weight:600;text-align:center;text-decoration:none">💬 Abrir WhatsApp</a>'
         +'</div></div>';
     });
     box.innerHTML=html;
-    // Adiciona eventos de copiar após render
     mods.forEach(function(m){
       var btn=document.getElementById('btn-cp-'+m);
       var link=_links[m];
       if(btn&&link){btn.onclick=function(){
-        if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(link).then(function(){alert('✅ Link copiado!');}).catch(function(){prompt('Copie:',link);});}
+        if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(link).then(function(){alert('✅ Link copiado! Cole no WhatsApp do cliente.');}).catch(function(){prompt('Copie:',link);});}
         else{prompt('Copie:',link);}
       };}
     });
@@ -4425,9 +4421,13 @@ function abrirEdicaoLj(id){
   var toggleBtn=document.getElementById('el-toggle-btn');
   if(toggleBtn){toggleBtn.textContent=lj.ativo?'Desativar lojista':'Ativar lojista';toggleBtn.className='btn '+(lj.ativo?'rd':'gr');}
   var verCb=document.getElementById('el-ver-senha');if(verCb)verCb.checked=false;
-  var mods=lj.modulos||['celular'];
-  ['celular','moto','pessoal'].forEach(function(m){
-    var el=document.getElementById('el-mod-'+m);if(el)el.checked=mods.indexOf(m)>-1;
+  var mods=lj.modulos||[];
+  ['clt','celular'].forEach(function(m){
+    var el=document.getElementById('el-mod-'+m);
+    var lbl=document.getElementById('el-lbl-'+m);
+    var on=mods.indexOf(m)>-1;
+    if(el)el.checked=on;
+    if(lbl){lbl.style.borderColor=on?'var(--bp)':'var(--brd)';lbl.style.background=on?'var(--bpl)':'';}
   });
   go('s-edit-lj');
 }
@@ -4463,13 +4463,13 @@ function salvarEdicaoLj(){
   lj.nome=nome;lj.email=email;
   lj.cnpj=gv('el-cnpj');lj.cidade=gv('el-cidade');
   lj.resp=gv('el-resp');lj.tel=gv('el-tel');
-  var modulos=[];['celular','moto','pessoal'].forEach(function(m){var el=document.getElementById('el-mod-'+m);if(el&&el.checked)modulos.push(m);});
-  if(modulos.length===0){alert('Selecione pelo menos 1 módulo.');return;}
+  var modulos=[];['clt','celular'].forEach(function(m){var el=document.getElementById('el-mod-'+m);if(el&&el.checked)modulos.push(m);});
+  if(modulos.length===0){alert('Selecione pelo menos 1 tipo de crédito.');return;}
   lj.modulos=modulos;
   var ramoSel=document.getElementById('el-ramo');if(ramoSel)lj.ramo=ramoSel.value;
   if(senha)lj.senha=senha;
   salvarDB();
-  alert('Lojista "'+lj.nome+'" atualizado!\n\nCredenciais atuais:\nE-mail: '+lj.email+'\nSenha: '+lj.senha);
+  alert('Parceiro "'+lj.nome+'" atualizado!\n\nCredenciais atuais:\nE-mail: '+lj.email+'\nSenha: '+lj.senha);
   go('s-lojistas-mgr');
 }
 
@@ -4484,8 +4484,8 @@ function criarLj(){
   if(senha.length<6){alert('Senha deve ter no mínimo 6 caracteres.');return;}
   if(DB.lojistas.find(function(l){return l.email.toLowerCase()===email.toLowerCase()})){alert('Já existe um lojista com este e-mail.');return;}
   var modulos=[];
-  ['celular','moto','pessoal'].forEach(function(m){var el=document.getElementById('nl-mod-'+m);if(el&&el.checked)modulos.push(m);});
-  if(modulos.length===0){alert('Selecione pelo menos 1 módulo para o lojista.');return;}
+  ['clt','celular'].forEach(function(m){var el=document.getElementById('nl-mod-'+m);if(el&&el.checked)modulos.push(m);});
+  if(modulos.length===0){alert('Selecione pelo menos 1 tipo de crédito para o parceiro.');return;}
   var novoLj={id:Date.now(),nome:nome,email:email,senha:senha,cidade:cidade||'—',ramo:ramo,resp:resp,logo:null,ativo:true,modulos:modulos,props:[]};
   DB.lojistas.push(novoLj);
   salvarDB();
