@@ -5,20 +5,20 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>Formulário de Crédito — BOLETO PAY</title>
 <style>
-*{box-sizing:border-box;margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif}
-:root{--bp:#0A84FF;--gr:#1A8C40;--grl:#E8FFF0;--rd:#CC2F28;--rdl:#FFF0EF;--am:#B36800;--aml:#FFF8E8;--pu:#7C3AED;--pul:#F0EDFF;--brd:#E5E7EB;--mu:#6B7280;--sec:#F9FAFB;--bg:#F5F7FA;--txt:#0A0A0A}
-body{background:var(--bg);min-height:100vh;padding:1.25rem 1rem 3rem}
+*{box-sizing:border-box;margin:0;padding:0;font-family:'Space Grotesk',system-ui,sans-serif}
+:root{--bp:#00D4FF;--gr:#00E676;--grl:rgba(0,230,118,.1);--rd:#FF4444;--rdl:rgba(255,68,68,.1);--am:#FFB700;--aml:rgba(255,183,0,.1);--pu:#A855F7;--pul:rgba(168,85,247,.1);--brd:rgba(255,255,255,.1);--mu:rgba(240,244,248,.5);--sec:rgba(255,255,255,.04);--bg:#080E17;--txt:#F0F4F8;--card:#0D1B2A}
+body{background:var(--bg);min-height:100vh;padding:1.25rem 1rem 3rem;color:var(--txt);background-image:radial-gradient(ellipse at 20% 50%,rgba(0,212,255,.04) 0%,transparent 60%)}
 .wrap{max-width:600px;margin:0 auto}
-.fi{width:100%;padding:11px 13px;border:1.5px solid var(--brd);border-radius:10px;font-size:14px;background:#fff;color:var(--txt);outline:none;transition:.15s}
-.fi:focus{border-color:var(--bp)}
-.fsel{width:100%;padding:11px 13px;border:1.5px solid var(--brd);border-radius:10px;font-size:14px;background:#fff;color:var(--txt);outline:none}
-.fl{font-size:12px;color:var(--mu);display:block;margin-bottom:5px;font-weight:500}
+.fi{width:100%;padding:11px 13px;border:1.5px solid var(--brd);border-radius:10px;font-size:14px;background:rgba(255,255,255,.05);color:var(--txt);outline:none;transition:.15s}
+.fi:focus{border-color:var(--bp);box-shadow:0 0 0 3px rgba(0,212,255,.1)}.fi::placeholder{color:rgba(240,244,248,.3)}
+.fsel{width:100%;padding:11px 13px;border:1.5px solid var(--brd);border-radius:10px;font-size:14px;background:rgba(13,27,42,.9);color:var(--txt);outline:none}.fsel option{background:#0d1b2a;color:#f0f4f8}
+.fl{font-size:12px;color:rgba(240,244,248,.7);display:block;margin-bottom:5px;font-weight:600;letter-spacing:.02em}
 .fld{margin-bottom:.875rem}
-.card{background:#fff;border-radius:14px;border:1px solid var(--brd);padding:1.25rem;margin-bottom:1rem}
+.card{background:rgba(13,27,42,.8);border-radius:14px;border:1px solid var(--brd);padding:1.25rem;margin-bottom:1rem}
 .ctit{font-size:10px;font-weight:700;color:var(--pu);text-transform:uppercase;letter-spacing:.05em;margin-bottom:.875rem;padding-bottom:7px;border-bottom:2px solid var(--pul)}
 .g2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .gf{grid-column:1/-1}
-.btn{display:block;width:100%;padding:13px;border:none;border-radius:11px;font-size:14px;font-weight:600;cursor:pointer;color:#fff;background:var(--pu);margin-top:8px}
+.btn{display:block;width:100%;padding:13px;border:none;border-radius:11px;font-size:14px;font-weight:700;cursor:pointer;color:#000;background:linear-gradient(135deg,#00D4FF,#0088CC);margin-top:8px;box-shadow:0 0 20px rgba(0,212,255,.25)}
 .btn.gr{background:var(--gr)}
 .btn.gz{background:#25D366}
 .tab{padding:10px 14px;font-size:12px;font-weight:500;color:var(--mu);cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;transition:.15s}
@@ -38,9 +38,9 @@ body{background:var(--bg);min-height:100vh;padding:1.25rem 1rem 3rem}
 .al-am{background:var(--aml);color:var(--am)}
 #tela-ok{display:none;text-align:center;padding:2.5rem 1rem}
 #tela-ok .icone{width:80px;height:80px;border-radius:50%;background:var(--grl);display:flex;align-items:center;justify-content:center;margin:0 auto 1.5rem;font-size:36px}
-#tela-ok h2{font-size:22px;font-weight:700;color:var(--gr);margin-bottom:.75rem}
+#tela-ok h2{font-size:22px;font-weight:700;color:var(--gr);margin-bottom:.75rem;text-shadow:0 0 20px rgba(0,230,118,.3)}
 #tela-ok p{font-size:14px;color:var(--mu);line-height:1.7;margin-bottom:1.5rem}
-#loading{position:fixed;inset:0;background:rgba(255,255,255,.9);display:flex;align-items:center;justify-content:center;z-index:9999;font-size:14px;color:var(--mu);flex-direction:column;gap:12px}
+#loading{position:fixed;inset:0;background:rgba(8,14,23,.95);display:flex;align-items:center;justify-content:center;z-index:9999;font-size:14px;color:var(--mu);flex-direction:column;gap:12px}
 .spin{width:36px;height:36px;border:3px solid var(--brd);border-top-color:var(--pu);border-radius:50%;animation:spin .8s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 @media(max-width:500px){.g2{grid-template-columns:1fr}}
