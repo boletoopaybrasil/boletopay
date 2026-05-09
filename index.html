@@ -73,11 +73,11 @@ textarea.fi{resize:none}
 .b-gr{background:var(--grl);color:var(--gr)}.b-rd{background:var(--rdl);color:var(--rd)}
 .b-bl{background:var(--bpl);color:var(--bp)}.b-am{background:var(--aml);color:var(--am)}
 .b-pu{background:var(--pul);color:var(--pu)}.b-tl{background:var(--tll);color:var(--tl)}
-.card{background:var(--card);border-radius:14px;border:1px solid var(--brd);padding:1.375rem}
+.card{background:var(--card);border-radius:14px;border:1px solid var(--brd);padding:1.375rem;color:var(--txt)}
 .ctit{font-size:10px;font-weight:700;color:var(--bp);text-transform:uppercase;letter-spacing:.06em;margin-bottom:.875rem;padding-bottom:7px;border-bottom:1px solid var(--brd)}
-.dr{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid var(--brd);font-size:12px}
+.dr{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid var(--brd);font-size:12px;color:var(--txt)}
 .dr:last-child{border-bottom:none}
-.dk{color:var(--mu)}.dv{font-weight:600}
+.dk{color:var(--mu)}.dv{font-weight:600;color:var(--txt)}
 .tabs{display:flex;gap:0;border-bottom:1px solid var(--brd);margin-bottom:1.5rem;overflow-x:auto;flex-shrink:0}
 .tab{padding:10px 15px;font-size:12px;font-weight:500;color:var(--mu);cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;transition:.15s}
 .tab:hover{color:var(--txt)}.tab.on{color:var(--bp);border-bottom-color:var(--bp);font-weight:600}
@@ -127,7 +127,7 @@ textarea.fi{resize:none}
 .corr-tab{padding:10px 14px;font-size:12px;color:var(--mu);border-bottom:2px solid transparent;cursor:pointer}
 .corr-tab.on{color:var(--bp);border-bottom-color:var(--bp)}
 .ov{position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:1000;display:flex;align-items:center;justify-content:center;padding:1rem;backdrop-filter:blur(4px)}
-.ov-box{background:var(--card);border:1px solid var(--brd);border-radius:18px;max-width:680px;width:100%;max-height:90vh;overflow-y:auto;box-shadow:0 25px 60px rgba(0,0,0,.5)}
+.ov-box{background:var(--card);border:1px solid var(--brd);border-radius:18px;max-width:680px;width:100%;max-height:90vh;overflow-y:auto;box-shadow:0 25px 60px rgba(0,0,0,.5);color:var(--txt)}
 .err-msg{font-size:12px;color:var(--rd);margin-top:6px;display:none}
 .err-msg.on{display:block}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
@@ -2586,7 +2586,7 @@ function renderEscolha(p){
 
   var props=p.propostas&&p.propostas.length>0?_toArray(p.propostas):null;
   var cores=['var(--gr)','var(--bp)','var(--pu)'];
-  var fundos=['var(--grl)','var(--bpl)','var(--pul)'];
+  var fundos=['rgba(0,230,118,.08)','rgba(0,212,255,.08)','rgba(168,85,247,.08)'];
 
   if(props&&props.length>0){
     var titulo=props.length>1?'O analista enviou '+props.length+' propostas. Clique na que o cliente preferir:':'Clique para confirmar a proposta:';
@@ -2635,7 +2635,7 @@ function escolherProposta(propId,idx){
   });
   p.propostaEscolhida=idx;
   var btn=document.getElementById('btn-confirmar-'+propId);
-  if(btn)btn.style.display='flex';
+  if(btn){btn.style.display='block';btn.style.opacity='1';}
 }
 
 function confirmarPropostaEscolhida(propId){
