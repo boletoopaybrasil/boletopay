@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
+<title>Solicitação de Crédito Pessoal — BOLETO PAY</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;font-family:'Space Grotesk',system-ui,sans-serif}
+:root{
+  --bp:#00D4FF;--gr:#00E676;--grl:rgba(0,230,118,.1);
+  --rd:#FF4444;--rdl:rgba(255,68,68,.1);--am:#FFB700;
+  --pu:#A855F7;--brd:rgba(255,255,255,.1);
+  --bg:#080E17;--txt:#F0F4F8;--mu:rgba(240,244,248,.5);
+  --card:rgba(13,27,42,.8);--sec:rgba(255,255,255,.04)
+}
+body{background:var(--bg);min-height:100vh;padding:1.25rem 1rem 4rem;color:var(--txt);background-image:radial-gradient(ellipse at 30% 20%,rgba(0,212,255,.04) 0%,transparent 60%)}
+.wrap{max-width:600px;margin:0 auto}
+/* HEADER */
+.header{display:flex;align-items:center;gap:12px;margin-bottom:2rem;padding:.75rem 0}
+.logo-mark{width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,#00D4FF,#0088CC);display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:700;color:#000;box-shadow:0 0 20px rgba(0,212,255,.3);flex-shrink:0}
+.header-info h1{font-size:16px;font-weight:700;letter-spacing:.02em}
+.header-info p{font-size:12px;color:var(--mu);margin-top:2px}
+/* TABS */
+.tabs{display:flex;border-bottom:1px solid var(--brd);margin-bottom:1.5rem;overflow-x:auto}
+.tab{padding:10px 16px;font-size:12px;font-weight:500;color:var(--mu);cursor:default;border-bottom:2px solid transparent;white-space:nowrap}
+.tab.on{color:var(--bp);border-bottom-color:var(--bp);font-weight:600}
+/* STEPS */
+.step{display:none}.step.on{display:block}
+/* CARDS */
+.card{background:var(--card);border:1px solid var(--brd);border-radius:14px;padding:1.375rem;margin-bottom:1rem}
+.ctit{font-size:10px;font-weight:700;color:var(--bp);text-transform:uppercase;letter-spacing:.08em;margin-bottom:1rem;padding-bottom:8px;border-bottom:1px solid var(--brd)}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.gf{grid-column:1/-1}
+.fld{margin-bottom:1rem}
+.fl{font-size:12px;color:rgba(240,244,248,.7);display:block;margin-bottom:6px;font-weight:600;letter-spacing:.02em}
+.fi{width:100%;padding:12px 14px;border:1.5px solid var(--brd);border-radius:10px;font-size:14px;background:rgba(255,255,255,.05);color:var(--txt);outline:none;transition:.2s}
+.fi:focus{border-color:var(--bp);box-shadow:0 0 0 3px rgba(0,212,255,.1)}
+.fi::placeholder{color:rgba(240,244,248,.3)}
+textarea.fi{resize:none}
+.fsel{width:100%;padding:12px 14px;border:1.5px solid var(--brd);border-radius:10px;font-size:14px;background:rgba(13,27,42,.9);color:var(--txt);outline:none}
+.fsel option{background:#0d1b2a;color:#f0f4f8}
+/* UPLOAD */
+.uz{border:2px dashed var(--brd);border-radius:12px;padding:1.25rem;text-align:center;cursor:pointer;background:var(--sec);position:relative;overflow:hidden;transition:.2s}
+.uz:hover{border-color:var(--bp);background:rgba(0,212,255,.04)}
+.uz.done{border-color:var(--gr);background:var(--grl)}
+.uz input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+/* BOTÕES */
+.btn{display:block;width:100%;padding:14px;border:none;border-radius:11px;font-size:15px;font-weight:700;cursor:pointer;color:#000;background:linear-gradient(135deg,#00D4FF,#0088CC);box-shadow:0 0 20px rgba(0,212,255,.25);transition:.2s;letter-spacing:.02em}
+.btn:hover{box-shadow:0 0 35px rgba(0,212,255,.4)}
+.btn-back{display:block;width:100%;padding:12px;border:1px solid var(--brd);border-radius:11px;font-size:14px;font-weight:500;cursor:pointer;color:var(--mu);background:transparent;margin-bottom:10px;transition:.2s}
+.btn-back:hover{border-color:var(--bp);color:var(--bp)}
+/* VALOR DESTAQUE */
+.valor-box{background:rgba(0,212,255,.06);border:1px solid rgba(0,212,255,.2);border-radius:14px;padding:1.5rem;margin-bottom:1rem;text-align:center}
+.valor-label{font-size:11px;color:var(--bp);font-weight:600;text-transform:uppercase;letter-spacing:.08em;margin-bottom:.5rem}
+.valor-input{font-size:2rem;font-weight:700;background:none;border:none;color:var(--bp);text-align:center;width:100%;outline:none;font-family:'Space Grotesk',sans-serif}
+.valor-input::placeholder{color:rgba(0,212,255,.3)}
+.valor-sub{font-size:12px;color:var(--mu);margin-top:.5rem}
+/* ERRO */
+.err-box{background:var(--rdl);border:1px solid rgba(255,68,68,.2);border-radius:10px;padding:10px 14px;font-size:13px;color:#FF6666;margin-bottom:1rem;display:none}
+.err-box.on{display:block}
+/* LGPD */
+.lgpd-box{display:flex;align-items:flex-start;gap:10px;background:rgba(0,212,255,.04);border:1px solid rgba(0,212,255,.12);border-radius:12px;padding:1rem;margin-bottom:1.25rem}
+.lgpd-box input{margin-top:2px;accent-color:var(--bp);width:16px;height:16px;flex-shrink:0;cursor:pointer}
+.lgpd-box label{font-size:12px;color:var(--mu);line-height:1.6;cursor:pointer}
+/* SUCESSO */
+#tela-ok{display:none;text-align:center;padding:3rem 1rem}
+.ok-ico{width:80px;height:80px;border-radius:50%;background:var(--grl);border:2px solid var(--gr);display:flex;align-items:center;justify-content:center;margin:0 auto 1.5rem;font-size:36px}
+/* LOADING */
+#loading{position:fixed;inset:0;background:rgba(8,14,23,.95);display:flex;align-items:center;justify-content:center;z-index:9999;flex-direction:column;gap:14px;font-size:14px;color:var(--mu);display:none}
+.spin{width:36px;height:36px;border:3px solid var(--brd);border-top-color:var(--bp);border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+@media(max-width:500px){.g2{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div id="loading"><div class="spin"></div>Enviando...</div>
+<div class="wrap">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="logo-mark">BP</div>
+    <div class="header-info">
+      <h1 id="nome-loja">BOLETO PAY</h1>
+      <p>Solicitação de crédito pessoal</p>
+    </div>
+  </div>
+
+  <!-- SUCESSO -->
+  <div id="tela-ok">
+    <div class="ok-ico">✓</div>
+    <h2 style="font-size:22px;font-weight:700;color:var(--gr);margin-bottom:.75rem">Enviado com sucesso!</h2>
+    <p style="font-size:14px;color:var(--mu);line-height:1.7;margin-bottom:1.5rem">Sua solicitação foi recebida. Em breve nossa equipe entrará em contato com o resultado.</p>
+    <div style="background:var(--card);border:1px solid var(--brd);border-radius:12px;padding:1rem;font-size:13px;color:var(--mu)">Você já pode fechar esta página.</div>
+  </div>
+
+  <!-- FORMULÁRIO -->
+  <div id="form-wrap">
+    <div class="tabs">
+      <div class="tab on" id="tab0">1 · Dados pessoais</div>
+      <div class="tab" id="tab1">2 · Financeiro</div>
+      <div class="tab" id="tab2">3 · Documentos</div>
+      <div class="tab" id="tab3">4 · Confirmar</div>
+    </div>
+
+    <!-- ABA 1: DADOS PESSOAIS -->
+    <div class="step on" id="s0">
+      <div class="card">
+        <div class="ctit">👤 Dados pessoais</div>
+        <div id="err0" class="err-box"></div>
+        <div class="g2">
+          <div class="gf fld"><label class="fl">Nome completo *</label><input class="fi" id="f-nome" placeholder="Nome e sobrenome"/></div>
+          <div class="fld"><label class="fl">CPF *</label><input class="fi" id="f-cpf" placeholder="000.000.000-00" maxlength="14"/></div>
+          <div class="fld"><label class="fl">Data de nascimento *</label><input class="fi" id="f-nasc" type="date"/></div>
+          <div class="fld"><label class="fl">RG *</label><input class="fi" id="f-rg" placeholder="00.000.000-0"/></div>
+          <div class="fld"><label class="fl">Nome da mãe *</label><input class="fi" id="f-mae" placeholder="Nome completo"/></div>
+          <div class="fld"><label class="fl">WhatsApp *</label><input class="fi" id="f-tel" type="tel" placeholder="(00) 99999-9999"/></div>
+          <div class="fld"><label class="fl">E-mail</label><input class="fi" id="f-email" type="email" placeholder="seu@email.com"/></div>
+          <div class="fld"><label class="fl">CEP</label><input class="fi" id="f-cep" placeholder="00000-000"/></div>
+          <div class="gf fld"><label class="fl">Endereço completo *</label><input class="fi" id="f-end" placeholder="Rua, número, bairro, cidade - UF"/></div>
+        </div>
+      </div>
+      <button class="btn" onclick="avancar(0,1)">Próximo →</button>
+    </div>
+
+    <!-- ABA 2: FINANCEIRO + VALOR -->
+    <div class="step" id="s1">
+      <div class="card">
+        <div class="ctit">💰 Dados financeiros</div>
+        <div id="err1" class="err-box"></div>
+
+        <!-- VALOR DESTAQUE -->
+        <div class="valor-box">
+          <div class="valor-label">💳 Valor solicitado (R$)</div>
+          <input class="valor-input" id="f-valor" type="number" placeholder="0,00"/>
+          <div class="valor-sub">Digite o valor que você precisa</div>
+        </div>
+
+        <div class="g2">
+          <div class="fld"><label class="fl">Renda mensal (R$) *</label><input class="fi" id="f-renda" type="number" placeholder="Ex: 3200"/></div>
+          <div class="fld"><label class="fl">Profissão *</label><input class="fi" id="f-prof" placeholder="Ex: Vendedor"/></div>
+          <div class="fld"><label class="fl">Vínculo empregatício *</label>
+            <select class="fsel" id="f-vinc">
+              <option value="">Selecione...</option>
+              <option>CLT registrado</option>
+              <option>Autônomo</option>
+              <option>MEI/PJ</option>
+              <option>Servidor público</option>
+              <option>Aposentado/Pensionista</option>
+            </select>
+          </div>
+          <div class="fld"><label class="fl">Tempo no emprego *</label>
+            <select class="fsel" id="f-tempo">
+              <option value="">Selecione...</option>
+              <option>Menos de 6 meses</option>
+              <option>6 meses a 1 ano</option>
+              <option>1 a 2 anos</option>
+              <option>2 a 5 anos</option>
+              <option>Mais de 5 anos</option>
+            </select>
+          </div>
+          <div class="fld"><label class="fl">Empresa / Local de trabalho</label><input class="fi" id="f-empresa" placeholder="Nome da empresa"/></div>
+          <div class="fld"><label class="fl">Possui restrição no CPF? *</label>
+            <select class="fsel" id="f-neg">
+              <option value="">Selecione...</option>
+              <option>Não, nome limpo</option>
+              <option>Sim</option>
+              <option>Não sei</option>
+            </select>
+          </div>
+          <div class="gf fld"><label class="fl">Observação</label><textarea class="fi" id="f-obs" rows="2" placeholder="Alguma informação adicional..."></textarea></div>
+        </div>
+      </div>
+      <button class="btn-back" onclick="ir(0)">← Anterior</button>
+      <button class="btn" onclick="avancar(1,2)">Próximo →</button>
+    </div>
+
+    <!-- ABA 3: DOCUMENTOS -->
+    <div class="step" id="s2">
+      <div class="card">
+        <div class="ctit">📄 Documentos</div>
+        <p style="font-size:13px;color:var(--mu);margin-bottom:1.25rem">Tire fotos nítidas ou selecione da galeria. Frente, verso e comprovante de renda são obrigatórios.</p>
+        <div id="err2" class="err-box"></div>
+        <div class="g2">
+          <div class="fld">
+            <p style="font-size:13px;font-weight:600;margin-bottom:8px">📷 RG/CNH — Frente *</p>
+            <div class="uz" id="uz1">
+              <input type="file" accept="image/*,application/pdf" capture="environment" onchange="upload(this,1)"/>
+              <div id="ic1" style="font-size:28px;margin-bottom:6px">📷</div>
+              <div id="tt1" style="font-size:12px;font-weight:600;color:var(--mu)">Toque para anexar</div>
+              <img id="img1" style="display:none;width:100%;max-height:90px;object-fit:cover;border-radius:8px;margin-top:8px"/>
+            </div>
+          </div>
+          <div class="fld">
+            <p style="font-size:13px;font-weight:600;margin-bottom:8px">📷 RG/CNH — Verso *</p>
+            <div class="uz" id="uz2">
+              <input type="file" accept="image/*,application/pdf" capture="environment" onchange="upload(this,2)"/>
+              <div id="ic2" style="font-size:28px;margin-bottom:6px">📷</div>
+              <div id="tt2" style="font-size:12px;font-weight:600;color:var(--mu)">Toque para anexar</div>
+              <img id="img2" style="display:none;width:100%;max-height:90px;object-fit:cover;border-radius:8px;margin-top:8px"/>
+            </div>
+          </div>
+          <div class="fld">
+            <p style="font-size:13px;font-weight:600;margin-bottom:8px">📄 Comprovante de renda *</p>
+            <div class="uz" id="uz3">
+              <input type="file" accept="image/*,application/pdf" capture="environment" onchange="upload(this,3)"/>
+              <div id="ic3" style="font-size:28px;margin-bottom:6px">📄</div>
+              <div id="tt3" style="font-size:12px;font-weight:600;color:var(--mu)">Toque para anexar</div>
+              <img id="img3" style="display:none;width:100%;max-height:90px;object-fit:cover;border-radius:8px;margin-top:8px"/>
+            </div>
+          </div>
+          <div class="fld">
+            <p style="font-size:13px;font-weight:600;margin-bottom:8px">🏠 Comprovante de residência</p>
+            <div class="uz" id="uz4">
+              <input type="file" accept="image/*,application/pdf" capture="environment" onchange="upload(this,4)"/>
+              <div id="ic4" style="font-size:28px;margin-bottom:6px">🏠</div>
+              <div id="tt4" style="font-size:12px;font-weight:600;color:var(--mu)">Toque para anexar</div>
+              <img id="img4" style="display:none;width:100%;max-height:90px;object-fit:cover;border-radius:8px;margin-top:8px"/>
+            </div>
+          </div>
+        </div>
+      </div>
+      <button class="btn-back" onclick="ir(1)">← Anterior</button>
+      <button class="btn" onclick="avancar(2,3)">Próximo →</button>
+    </div>
+
+    <!-- ABA 4: CONFIRMAR -->
+    <div class="step" id="s3">
+      <div class="card">
+        <div class="ctit">✅ Confirmar e enviar</div>
+        <div id="resumo" style="margin-bottom:1.25rem"></div>
+        <div class="lgpd-box">
+          <input type="checkbox" id="lgpd"/>
+          <label for="lgpd"><strong>Autorizo a consulta de crédito</strong> nos órgãos de proteção (SPC, Serasa, SCR) e o tratamento dos meus dados conforme a <strong>LGPD — Lei 13.709/2018</strong>.</label>
+        </div>
+        <div id="err3" class="err-box"></div>
+      </div>
+      <button class="btn-back" onclick="ir(2)">← Anterior</button>
+      <button class="btn" id="btn-enviar" onclick="enviar()">✅ Enviar solicitação</button>
+    </div>
+
+  </div><!-- /form-wrap -->
+</div><!-- /wrap -->
+
+<script>
+var FB_URL = 'https://boletopay-e4a72-default-rtdb.firebaseio.com';
+var DB_KEY = 'boletopay_db';
+var lojaId = 0;
+var lojaNome = 'BOLETO PAY';
+var docs = {};
+
+// Pegar parâmetros da URL
+window.addEventListener('load', function(){
+  var p = new URLSearchParams(window.location.search);
+  lojaId = parseInt(p.get('loja')) || 0;
+  lojaNome = decodeURIComponent(p.get('nome') || 'BOLETO PAY');
+  document.getElementById('nome-loja').textContent = lojaNome;
+  document.title = 'Crédito Pessoal — ' + lojaNome;
+});
+
+// Navegar sem validação (só botão Próximo valida)
+function ir(idx){
+  for(var i=0;i<4;i++){
+    var s=document.getElementById('s'+i);
+    var t=document.getElementById('tab'+i);
+    if(s)s.className='step'+(i===idx?' on':'');
+    if(t)t.className='tab'+(i===idx?' on':'');
+  }
+  if(idx===3) gerarResumo();
+  window.scrollTo(0,0);
+}
+
+// Avançar com validação
+function avancar(de, para){
+  var err=document.getElementById('err'+de);
+  if(err)err.style.display='none';
+  function erro(msg){
+    if(err){err.textContent='⚠️ '+msg;err.style.display='block';}
+    else alert('⚠️ '+msg);
+    window.scrollTo(0,0);
+  }
+  var g=function(id){var e=document.getElementById(id);return e?e.value.trim():'';};
+
+  if(de===0){
+    if(!g('f-nome'))return erro('Preencha o nome completo.');
+    if(g('f-nome').split(' ').filter(function(x){return x;}).length<2)return erro('Informe nome E sobrenome.');
+    if(!g('f-cpf'))return erro('Preencha o CPF.');
+    if(g('f-cpf').replace(/[^0-9]/g,'').length!==11)return erro('CPF inválido — precisa ter 11 dígitos.');
+    if(!g('f-nasc'))return erro('Informe a data de nascimento.');
+    var nasc=new Date(g('f-nasc')),hoje=new Date();
+    var idade=hoje.getFullYear()-nasc.getFullYear();
+    if(hoje.getMonth()<nasc.getMonth()||(hoje.getMonth()===nasc.getMonth()&&hoje.getDate()<nasc.getDate()))idade--;
+    if(idade<18)return erro('O solicitante deve ter pelo menos 18 anos.');
+    if(!g('f-rg'))return erro('Preencha o RG.');
+    if(!g('f-mae'))return erro('Preencha o nome da mãe.');
+    if(!g('f-tel'))return erro('Preencha o WhatsApp.');
+    if(g('f-tel').replace(/[^0-9]/g,'').length<10)return erro('WhatsApp inválido.');
+    if(!g('f-end'))return erro('Preencha o endereço completo.');
+  }
+  if(de===1){
+    if(!g('f-valor'))return erro('Informe o valor solicitado.');
+    if(parseFloat(g('f-valor'))<=0)return erro('Valor inválido.');
+    if(!g('f-renda'))return erro('Preencha a renda mensal.');
+    if(!g('f-prof'))return erro('Preencha a profissão.');
+    if(!g('f-vinc'))return erro('Selecione o vínculo empregatício.');
+    if(!g('f-tempo'))return erro('Selecione o tempo no emprego.');
+    if(!g('f-neg'))return erro('Informe se possui restrição no CPF.');
+  }
+  if(de===2){
+    if(!docs[1]||!docs[1].done)return erro('Anexe a foto do RG/CNH Frente — obrigatório.');
+    if(!docs[2]||!docs[2].done)return erro('Anexe a foto do RG/CNH Verso — obrigatório.');
+    if(!docs[3]||!docs[3].done)return erro('Anexe o comprovante de renda — obrigatório.');
+  }
+  ir(para);
+}
+
+// Upload com compressão
+function upload(inp,n){
+  var f=inp.files[0];if(!f)return;
+  var uz=document.getElementById('uz'+n);
+  var ic=document.getElementById('ic'+n);
+  var tt=document.getElementById('tt'+n);
+  var img=document.getElementById('img'+n);
+  if(uz)uz.classList.add('done');
+  if(ic)ic.textContent='✅';
+  if(tt){tt.textContent=f.name;tt.style.color='var(--gr)';}
+  var r=new FileReader();
+  r.onload=function(e){
+    var src=e.target.result;
+    if(f.type.startsWith('image/')){
+      var canvas=document.createElement('canvas');
+      var ctx=canvas.getContext('2d');
+      var image=new Image();
+      image.onload=function(){
+        var maxW=800,w=image.width,h=image.height;
+        if(w>maxW){h=Math.round(h*maxW/w);w=maxW;}
+        canvas.width=w;canvas.height=h;
+        ctx.drawImage(image,0,0,w,h);
+        var comp=canvas.toDataURL('image/jpeg',0.6);
+        docs[n]={name:f.name,type:'image/jpeg',done:true,b64:comp};
+        if(img){img.src=comp;img.style.display='block';}
+      };
+      image.src=src;
+    } else {
+      docs[n]={name:f.name,type:f.type,done:true,b64:src};
+    }
+  };
+  r.readAsDataURL(f);
+}
+
+// Resumo
+function gerarResumo(){
+  var g=function(id){var e=document.getElementById(id);return e?e.value.trim():'';};
+  var r=document.getElementById('resumo');if(!r)return;
+  var linhas=[
+    ['Nome',g('f-nome')],
+    ['CPF',g('f-cpf')],
+    ['WhatsApp',g('f-tel')],
+    ['Valor solicitado','R$ '+parseFloat(g('f-valor')||0).toLocaleString('pt-BR',{minimumFractionDigits:2})],
+    ['Renda mensal','R$ '+parseFloat(g('f-renda')||0).toLocaleString('pt-BR',{minimumFractionDigits:2})],
+    ['Vínculo',g('f-vinc')],
+    ['Restrição CPF',g('f-neg')],
+    ['Documentos',Object.keys(docs).filter(function(k){return docs[k]&&docs[k].done;}).length+' de 4 anexados']
+  ];
+  r.innerHTML=linhas.map(function(l){
+    return '<div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--brd);font-size:13px">'
+      +'<span style="color:var(--mu)">'+l[0]+'</span>'
+      +'<span style="font-weight:600;color:var(--txt)">'+l[1]+'</span></div>';
+  }).join('');
+}
+
+// Enviar
+function enviar(){
+  var err=document.getElementById('err3');
+  if(err)err.style.display='none';
+  if(!document.getElementById('lgpd').checked){
+    if(err){err.textContent='⚠️ Marque a autorização LGPD para continuar.';err.style.display='block';}
+    return;
+  }
+  var g=function(id){var e=document.getElementById(id);return e?e.value.trim():'';};
+  var btn=document.getElementById('btn-enviar');
+  var loading=document.getElementById('loading');
+  btn.disabled=true;btn.textContent='⏳ Enviando...';
+  if(loading)loading.style.display='flex';
+
+  var agora=new Date().toLocaleString('pt-BR',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'});
+  var docsEnvio={};
+  [1,2,3,4].forEach(function(n){
+    docsEnvio[n]=docs[n]&&docs[n].done?{name:docs[n].name,type:docs[n].type,done:true,b64:docs[n].b64||null}:{done:false};
+  });
+
+  var prop={
+    id:Date.now(),
+    lj_id:lojaId,
+    lj_nome:lojaNome,
+    tipo_credito:'pessoal', // identifica como crédito pessoal
+    nome:g('f-nome'),cpf:g('f-cpf'),nasc:g('f-nasc'),rg:g('f-rg'),mae:g('f-mae'),
+    tel:g('f-tel'),email:g('f-email'),cep:g('f-cep'),end:g('f-end'),
+    renda:'R$ '+g('f-renda'),prof:g('f-prof'),vinc:g('f-vinc'),
+    tempo:g('f-tempo'),neg:g('f-neg'),empresa:g('f-empresa'),
+    valor:'R$ '+g('f-valor'),
+    obs_ap:g('f-obs'),
+    tipo:'Crédito Pessoal',
+    marca:'—',modelo:'Crédito Pessoal',cor:'—',
+    imei1:'',imei2:'',
+    docs:docsEnvio,
+    data:agora,resultado:null,lido:false,resposta:null
+  };
+
+  fetch(FB_URL+'/'+DB_KEY+'/lojistas.json')
+    .then(function(r){return r.json();})
+    .then(function(lojistas){
+      if(!lojistas)throw new Error('Banco não encontrado');
+      var arr=Array.isArray(lojistas)?lojistas:Object.values(lojistas);
+      var ljIdx=arr.findIndex(function(l){return l&&l.id===prop.lj_id;});
+      if(ljIdx<0)throw new Error('Loja não encontrada');
+      var props=arr[ljIdx].props;
+      var numProps=props?(Array.isArray(props)?props.length:Object.keys(props).length):0;
+      return fetch(FB_URL+'/'+DB_KEY+'/lojistas/'+ljIdx+'/props/'+numProps+'.json',{
+        method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(prop)
+      });
+    })
+    .then(function(r){
+      if(!r.ok)throw new Error('Erro '+r.status);
+      if(loading)loading.style.display='none';
+      document.getElementById('form-wrap').style.display='none';
+      document.getElementById('tela-ok').style.display='block';
+      window.scrollTo(0,0);
+    })
+    .catch(function(e){
+      console.error(e);
+      if(loading)loading.style.display='none';
+      if(err){err.textContent='❌ Erro ao enviar. Verifique sua conexão e tente novamente.';err.style.display='block';}
+      btn.textContent='✅ Enviar solicitação';btn.disabled=false;
+    });
+}
+</script>
+</body>
+</html>

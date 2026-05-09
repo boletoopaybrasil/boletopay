@@ -4,78 +4,73 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>BOLETO PAY — Sistema de Crédito</title>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet"/>
 <style>
-*{box-sizing:border-box;margin:0;padding:0;font-family:'Space Grotesk',system-ui,sans-serif}
+*{box-sizing:border-box;margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif}
 :root{
-  --bp:#00D4FF;--bpd:#00A8CC;--bpl:rgba(0,212,255,.08);
-  --gr:#00E676;--grl:rgba(0,230,118,.08);
-  --rd:#FF4444;--rdl:rgba(255,68,68,.08);
-  --am:#FFB700;--aml:rgba(255,183,0,.08);
-  --pu:#A855F7;--pul:rgba(168,85,247,.08);
-  --tl:#00BFA5;--tll:rgba(0,191,165,.08);
-  --surf:#0D1B2A;--bg:#080E17;--brd:rgba(255,255,255,.08);
-  --txt:#F0F4F8;--mu:rgba(240,244,248,.45);--sec:rgba(255,255,255,.04);
-  --card:#0D1B2A;--card2:#111E2E;
+  --bp:#0A84FF;--bpd:#0066CC;--bpl:#E8F4FF;
+  --gr:#1A8C40;--grl:#E8FFF0;
+  --rd:#CC2F28;--rdl:#FFF0EF;
+  --am:#B36800;--aml:#FFF8E8;
+  --pu:#5B3FB8;--pul:#F0EDFF;
+  --tl:#0F6E56;--tll:#E8FBF5;
+  --surf:#fff;--bg:#F5F7FA;--brd:#E5E7EB;
+  --txt:#0A0A0A;--mu:#6B7280;--sec:#F9FAFB
 }
-body{background:var(--bg);color:var(--txt);min-height:100vh;background-image:radial-gradient(ellipse at 20% 50%,rgba(0,212,255,.04) 0%,transparent 60%),radial-gradient(ellipse at 80% 20%,rgba(168,85,247,.03) 0%,transparent 60%)}
+body{background:var(--bg);color:var(--txt);min-height:100vh}
 .scr{display:none}.scr.on{display:block;min-height:100vh}
+/* Garante visibilidade mesmo quando JS seta display direto */
 #s-form-cliente.on{display:block!important}
-.fi{width:100%;padding:11px 13px;border:1.5px solid var(--brd);border-radius:10px;font-size:14px;background:rgba(255,255,255,.04);color:var(--txt);outline:none;transition:.2s}
-.fi:focus{border-color:var(--bp);box-shadow:0 0 0 3px rgba(0,212,255,.1)}.fi.err{border-color:var(--rd)}
-.fi::placeholder{color:var(--mu)}
-textarea.fi{resize:none}
-.fsel{width:100%;padding:11px 13px;border:1.5px solid var(--brd);border-radius:10px;font-size:14px;background:rgba(13,27,42,.9);color:var(--txt);outline:none}
-.fsel option{background:#0d1b2a;color:#f0f4f8}
+.fi{width:100%;padding:11px 13px;border:1.5px solid var(--brd);border-radius:10px;font-size:14px;background:#fff;color:var(--txt);outline:none;transition:.2s}
+.fi:focus{border-color:var(--bp)}.fi.err{border-color:var(--rd)}
+.fsel{width:100%;padding:11px 13px;border:1.5px solid var(--brd);border-radius:10px;font-size:14px;background:#fff;color:var(--txt);outline:none}
 .fl{font-size:12px;color:var(--mu);display:block;margin-bottom:5px;font-weight:500}
 .fld{margin-bottom:1rem}
 .shell{display:flex;min-height:100vh;background:var(--bg)}
-.sidebar{width:224px;background:var(--card);border-right:1px solid var(--brd);padding:1.25rem 1rem;flex-shrink:0;display:flex;flex-direction:column;position:sticky;top:0;height:100vh;overflow-y:auto}
+.sidebar{width:220px;background:#fff;border-right:1px solid var(--brd);padding:1.25rem 1rem;flex-shrink:0;display:flex;flex-direction:column;position:sticky;top:0;height:100vh;overflow-y:auto}
 .sb-logo{display:flex;align-items:center;gap:10px;margin-bottom:1.75rem;padding:0 .375rem}
-.sb-mark{width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;color:#000;font-size:12px;font-weight:700;background:linear-gradient(135deg,#00D4FF,#0088CC);box-shadow:0 0 15px rgba(0,212,255,.35)}
-.sb-nm{font-size:13px;font-weight:700;color:var(--txt);letter-spacing:.02em}.sb-rl{font-size:10px;color:var(--mu)}
+.sb-mark{width:32px;height:32px;border-radius:10px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:13px;font-weight:700}
+.sb-nm{font-size:13px;font-weight:700;color:var(--txt)}.sb-rl{font-size:10px;color:var(--mu)}
 .ni{display:flex;align-items:center;gap:8px;padding:9px 10px;border-radius:9px;cursor:pointer;font-size:13px;color:var(--mu);margin-bottom:2px;transition:.15s}
 .ni:hover{background:var(--sec);color:var(--txt)}
-.ni.on-a{background:var(--bpl);color:var(--bp);font-weight:600;box-shadow:inset 2px 0 0 var(--bp)}
-.ni.on-l{background:var(--pul);color:var(--pu);font-weight:600;box-shadow:inset 2px 0 0 var(--pu)}
+.ni.on-a{background:var(--bpl);color:var(--bp);font-weight:600}
+.ni.on-l{background:var(--pul);color:var(--pu);font-weight:600}
 .nic{font-size:14px;width:18px;text-align:center;flex-shrink:0}
 .n-badge{display:inline-flex;align-items:center;justify-content:center;background:var(--rd);color:#fff;font-size:10px;padding:1px 6px;border-radius:20px;font-weight:700;margin-left:auto;flex-shrink:0}
-.n-badge.am{background:var(--am);color:#000}
+.n-badge.am{background:var(--am)}
 .sb-bot{margin-top:auto;padding-top:.875rem;border-top:1px solid var(--brd)}
 .sb-usr{display:flex;align-items:center;gap:8px;padding:.5rem .375rem;margin-bottom:.375rem}
 .sb-av{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
 .content{flex:1;padding:1.75rem;overflow-y:auto}
 .ph{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:1.75rem}
 .pt{font-size:20px;font-weight:700;color:var(--txt)}.ps{font-size:12px;color:var(--mu);margin-top:3px}
-.btn{display:inline-flex;align-items:center;gap:7px;padding:10px 18px;border:none;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;color:#000;background:var(--bp);transition:.15s}
-.btn:hover{opacity:.85}.btn.gr{background:var(--gr);color:#000}.btn.rd{background:var(--rd);color:#fff}.btn.am{background:var(--am);color:#000}.btn.pu{background:var(--pu);color:#fff}
-.btn-ghost{padding:9px 16px;background:var(--sec);color:var(--txt);border:1px solid var(--brd);border-radius:9px;font-size:13px;cursor:pointer;font-weight:500;transition:.15s}
-.btn-ghost:hover{border-color:var(--bp);color:var(--bp)}
-.btn-send{padding:12px 22px;background:var(--bp);color:#000;border:none;border-radius:11px;font-size:14px;font-weight:600;cursor:pointer;width:100%}
+.btn{display:inline-flex;align-items:center;gap:7px;padding:10px 18px;border:none;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;color:#fff;background:var(--bp);transition:.15s}
+.btn:hover{opacity:.9}.btn.gr{background:var(--gr)}.btn.rd{background:var(--rd)}.btn.am{background:var(--am)}.btn.pu{background:#7C3AED}
+.btn-ghost{padding:9px 16px;background:var(--sec);color:var(--txt);border:1px solid var(--brd);border-radius:9px;font-size:13px;cursor:pointer;font-weight:500}
+.btn-send{padding:12px 22px;background:var(--bp);color:#fff;border:none;border-radius:11px;font-size:14px;font-weight:600;cursor:pointer;width:100%}
 .back{font-size:13px;color:var(--mu);cursor:pointer;margin-bottom:1.25rem;display:inline-flex;align-items:center;gap:5px;background:none;border:none;padding:0}
 .back:hover{color:var(--bp)}
 .mg4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:1.5rem}
 .mg3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-bottom:1.5rem}
 .mg2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:1.5rem}
-.mc{background:var(--card);border-radius:13px;border:1px solid var(--brd);padding:1.125rem;transition:.15s}
-.mc:hover{border-color:rgba(0,212,255,.25);box-shadow:0 0 20px rgba(0,212,255,.08)}
-.ml{font-size:10px;color:var(--mu);margin-bottom:7px;font-weight:600;text-transform:uppercase;letter-spacing:.08em}
-.mv{font-size:22px;font-weight:700;margin-bottom:3px;font-family:'JetBrains Mono',monospace}.mt{font-size:11px}
+.mc{background:#fff;border-radius:13px;border:1px solid var(--brd);padding:1.125rem;transition:.15s}
+.mc:hover{border-color:var(--bp)}
+.ml{font-size:10px;color:var(--mu);margin-bottom:7px;font-weight:500;text-transform:uppercase;letter-spacing:.04em}
+.mv{font-size:22px;font-weight:700;margin-bottom:3px}.mt{font-size:11px}
 .tu{color:var(--gr)}.td{color:var(--rd)}
 .stl{font-size:14px;font-weight:700;margin-bottom:.875rem;color:var(--txt)}
-.tbl{background:var(--card);border-radius:13px;border:1px solid var(--brd);overflow:hidden}
-.th{display:grid;padding:10px 14px;background:var(--sec);font-size:11px;font-weight:600;color:var(--mu);text-transform:uppercase;letter-spacing:.06em}
+.tbl{background:#fff;border-radius:13px;border:1px solid var(--brd);overflow:hidden}
+.th{display:grid;padding:10px 14px;background:var(--sec);font-size:11px;font-weight:600;color:var(--mu);text-transform:uppercase;letter-spacing:.03em}
 .tr{display:grid;padding:12px 14px;border-top:1px solid var(--brd);font-size:12px;align-items:center;cursor:pointer;transition:.15s}
-.tr:hover{background:var(--sec)}
+.tr:hover{background:#FAFBFF}
 .ci{display:flex;align-items:center;gap:9px}
-.av{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
+.av{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
 .cn{font-size:12px;font-weight:600;color:var(--txt)}.cx{font-size:11px;color:var(--mu);margin-top:1px}
 .bdg{display:inline-flex;align-items:center;padding:3px 9px;border-radius:20px;font-size:10px;font-weight:600}
 .b-gr{background:var(--grl);color:var(--gr)}.b-rd{background:var(--rdl);color:var(--rd)}
 .b-bl{background:var(--bpl);color:var(--bp)}.b-am{background:var(--aml);color:var(--am)}
 .b-pu{background:var(--pul);color:var(--pu)}.b-tl{background:var(--tll);color:var(--tl)}
-.card{background:var(--card);border-radius:14px;border:1px solid var(--brd);padding:1.375rem}
-.ctit{font-size:10px;font-weight:700;color:var(--bp);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.875rem;padding-bottom:7px;border-bottom:1px solid var(--brd)}
+.card{background:#fff;border-radius:14px;border:1px solid var(--brd);padding:1.375rem}
+.ctit{font-size:10px;font-weight:700;color:var(--bp);text-transform:uppercase;letter-spacing:.05em;margin-bottom:.875rem;padding-bottom:7px;border-bottom:2px solid var(--bpl)}
 .dr{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid var(--brd);font-size:12px}
 .dr:last-child{border-bottom:none}
 .dk{color:var(--mu)}.dv{font-weight:600}
@@ -85,6 +80,7 @@ textarea.fi{resize:none}
 .tp{display:none}.tp.on{display:block}
 .ef2{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin-bottom:11px}
 .ef-full{grid-column:1/-1}
+/* UPLOAD REAL */
 .up-zone{border:2px dashed var(--brd);border-radius:13px;padding:1.375rem;text-align:center;cursor:pointer;transition:.2s;background:var(--sec);position:relative;overflow:hidden}
 .up-zone:hover{border-color:var(--bp);background:var(--bpl)}
 .up-zone.done{border-color:var(--gr);background:var(--grl);border-style:solid}
@@ -94,54 +90,71 @@ textarea.fi{resize:none}
 .up-sub{font-size:11px;color:var(--mu)}
 .up-nm{font-size:12px;font-weight:600;color:var(--gr);margin-top:5px}
 .up-preview{width:100%;max-height:120px;object-fit:cover;border-radius:9px;margin-top:8px;display:none}
+/* APARELHO */
 .ap-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:1.25rem}
-.ap-c{border:2px solid var(--brd);border-radius:12px;padding:1rem;cursor:pointer;text-align:center;transition:.2s;background:var(--sec)}
+.ap-c{border:2px solid var(--brd);border-radius:12px;padding:1rem;cursor:pointer;text-align:center;transition:.2s}
 .ap-c:hover{border-color:var(--bp)}.ap-c.sel{border-color:var(--bp);background:var(--bpl)}
-.pw{min-height:100vh;display:flex;align-items:center;justify-content:center;background:var(--bg);padding:2rem;position:relative;overflow:hidden}
-.pw::after{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(0,212,255,.02) 1px,transparent 1px),linear-gradient(90deg,rgba(0,212,255,.02) 1px,transparent 1px);background-size:60px 60px;pointer-events:none}
-.pc{background:rgba(0,212,255,.04);border:1px solid rgba(0,212,255,.12);border-radius:16px;padding:2rem 1.5rem;cursor:pointer;text-align:center;transition:.3s;position:relative;overflow:hidden}
-.pc:hover{transform:translateY(-4px);background:rgba(0,212,255,.08);box-shadow:0 20px 40px rgba(0,0,0,.3),0 0 0 1px rgba(0,212,255,.2)}
-.lf{background:rgba(13,27,42,.9);border:1px solid var(--brd);border-radius:16px;padding:2rem;width:100%;max-width:400px;position:relative;z-index:1;backdrop-filter:blur(20px)}
-.lf-logo{text-align:center;margin-bottom:2rem}
-.lt{font-size:11px;color:var(--mu);font-weight:600;text-transform:uppercase;letter-spacing:.08em;margin-bottom:1.25rem;padding-bottom:.75rem;border-bottom:1px solid var(--brd)}
-.al{padding:.75rem 1rem;border-radius:10px;font-size:13px;margin-bottom:.875rem;display:none}
-.al.on{display:block}
-.al.al-rd{background:var(--rdl);color:var(--rd);border:1px solid rgba(255,68,68,.2)}
-.al.al-gr{background:var(--grl);color:var(--gr);border:1px solid rgba(0,230,118,.2)}
-.al.al-am{background:var(--aml);color:var(--am)}
-.al.al-bl{background:var(--bpl);color:var(--bp)}
-.q-card{background:var(--card);border:1px solid var(--brd);border-radius:14px;padding:1.125rem;margin-bottom:10px;cursor:pointer;transition:.2s}
-.q-card:hover{border-color:rgba(0,212,255,.3);box-shadow:0 0 20px rgba(0,212,255,.08)}
-.q-card.novo{border-left:3px solid var(--bp)}
-.res-modal{background:var(--card2);border-radius:12px;padding:1.125rem;margin-bottom:1rem;border:1px solid var(--brd)}
-.doc-box{border:1px solid var(--brd);border-radius:12px;padding:1rem;text-align:center;background:var(--sec)}
+/* PORTAL */
+.pw{min-height:100vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#0A1628,#0F2040);padding:2rem}
+.pc{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:20px;padding:2rem 1.5rem;cursor:pointer;text-align:center;transition:.2s}
+.pc:hover{transform:translateY(-2px);background:rgba(255,255,255,.1)}
+/* LOGIN */
+.lw{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:2rem}
+.lc{background:#fff;border-radius:22px;padding:2.5rem;width:100%;max-width:380px;border:1px solid var(--brd)}
+/* LOJISTA */
+.lj-top{background:#fff;border-bottom:1px solid var(--brd);padding:.875rem 1.5rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:10}
+.lj-shell{display:flex;flex-direction:column;min-height:100vh;background:var(--bg)}
+.nbell{width:36px;height:36px;background:var(--sec);border-radius:9px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:16px;position:relative;border:1px solid var(--brd)}
+.ndot{width:8px;height:8px;background:var(--rd);border-radius:50%;position:absolute;top:6px;right:6px;border:2px solid #fff}
+.err-msg{font-size:11px;color:var(--rd);margin-top:4px;display:none}
+.err-msg.on{display:block}
+/* ACARD */
+.acard{background:#fff;border-radius:14px;border:2px solid rgba(10,132,255,.15);padding:1.375rem;margin-bottom:13px}
+.acard-meta{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;background:var(--sec);border-radius:10px;padding:.875rem;margin-bottom:11px}
+.am-l{font-size:10px;color:var(--mu);margin-bottom:2px;font-weight:500}.am-v{font-size:13px;font-weight:700}
+/* PROG */
+.prog-row{display:flex;align-items:center;gap:10px;margin-bottom:7px}
+.prog-bar{flex:1;height:7px;background:var(--sec);border-radius:4px;overflow:hidden}
+.prog-fill{height:100%;border-radius:4px}
+/* ALERT */
+.al{border-radius:13px;padding:1rem 1.25rem;margin-bottom:12px}
+.al-am{background:var(--aml);border:1.5px solid rgba(179,104,0,.25)}
+.al-gr{background:var(--grl);border:1.5px solid rgba(26,140,64,.25)}
+.al-bl{background:var(--bpl);border:1px solid rgba(10,132,255,.2)}
+.al-rd{background:var(--rdl);border:1.5px solid rgba(204,47,40,.2)}
+.ntag{font-size:10px;background:var(--rd);color:#fff;padding:2px 8px;border-radius:20px;font-weight:700}
+/* LOGO UPLOAD LOJISTA */
+.logo-up{width:80px;height:80px;border-radius:16px;background:var(--sec);border:2px dashed var(--brd);display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;overflow:hidden;position:relative;flex-shrink:0}
+.logo-up:hover{border-color:var(--pu)}
+.logo-up input{position:absolute;inset:0;opacity:0;cursor:pointer}
+.logo-up img{width:100%;height:100%;object-fit:cover;display:none}
+/* FORM CLIENTE LINK */
+.form-public{max-width:620px;margin:0 auto;padding:2rem}
+/* ESCOLHA RESPOSTA */
+.rc-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:1rem}
+.rc-c{border:2px solid var(--brd);border-radius:12px;padding:1rem;cursor:pointer;text-align:center;transition:.2s}
+.rc-c:hover{border-color:var(--bp)}
+.rc-c.sel-gr{border-color:var(--gr);background:var(--grl)}
+.rc-c.sel-am{border-color:var(--am);background:var(--aml)}
+/* DOC STATUS */
+.doc-box{border:1px solid var(--brd);border-radius:12px;padding:1.125rem;text-align:center;background:var(--sec)}
 .doc-box.ok{border-color:var(--gr);background:var(--grl)}
 .doc-box.pend{border-color:var(--am);background:var(--aml)}
-.lj-top{background:var(--card);border-bottom:1px solid var(--brd);padding:.875rem 1.25rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:10}
-.lj-nav{display:flex;gap:2px;background:var(--sec);border-radius:10px;padding:3px;overflow-x:auto}
-.lj-ni{padding:7px 14px;border-radius:8px;font-size:12px;font-weight:500;color:var(--mu);cursor:pointer;transition:.15s;white-space:nowrap}
-.lj-ni:hover{color:var(--txt)}
-.lj-ni.on-l{background:var(--card2);color:var(--bp);font-weight:600}
-.rc-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:1rem}
-.rc-c{background:var(--sec);border:1px solid var(--brd);border-radius:12px;padding:1rem;cursor:pointer;text-align:center;transition:.15s}
-.rc-c:hover{border-color:var(--bp);background:var(--bpl)}
-.corr-tab{padding:10px 14px;font-size:12px;color:var(--mu);border-bottom:2px solid transparent;cursor:pointer}
-.corr-tab.on{color:var(--bp);border-bottom-color:var(--bp)}
-.ov{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:1000;display:flex;align-items:center;justify-content:center;padding:1rem;backdrop-filter:blur(4px)}
-.ov-box{background:var(--card);border:1px solid var(--brd);border-radius:18px;max-width:680px;width:100%;max-height:90vh;overflow-y:auto;box-shadow:0 25px 60px rgba(0,0,0,.5)}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
-@keyframes slideUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
-.slide-up{animation:slideUp .25s ease forwards}
-::-webkit-scrollbar{width:5px;height:5px}
-::-webkit-scrollbar-track{background:transparent}
-::-webkit-scrollbar-thumb{background:rgba(255,255,255,.08);border-radius:3px}
-::-webkit-scrollbar-thumb:hover{background:rgba(0,212,255,.25)}
-@media(max-width:768px){
-  .sidebar{display:none}
-  .mg4{grid-template-columns:1fr 1fr}
-  .mg3{grid-template-columns:1fr}
-  .ef2{grid-template-columns:1fr}
+@media(max-width:700px){
+  .sidebar{display:none}.mg4{grid-template-columns:1fr 1fr}
+  .ef2{grid-template-columns:1fr}.ap-grid{grid-template-columns:1fr}
+  .rc-grid{grid-template-columns:1fr}
 }
+
+.lj-sidebar{width:200px;background:#fff;border-right:1px solid var(--brd);padding:1.25rem 1rem;flex-shrink:0;display:flex;flex-direction:column;min-height:calc(100vh - 57px)}
+.lj-ni{display:flex;align-items:center;gap:8px;padding:9px 10px;border-radius:9px;cursor:pointer;font-size:13px;color:var(--mu);margin-bottom:2px;transition:.15s}
+.lj-ni:hover{background:var(--sec);color:var(--txt)}
+.lj-ni.on{background:var(--pul);color:var(--pu);font-weight:600}
+.lj-body{display:flex;flex:1}
+
+.parc-btns{display:flex;flex-wrap:wrap;gap:5px;margin-top:5px}
+.parc-btn{padding:5px 10px;font-size:11px;font-weight:600;border:1.5px solid var(--brd);border-radius:7px;cursor:pointer;background:#fff;color:var(--mu);transition:.1s}
+.parc-btn.sel{border-color:currentColor;font-weight:700}
 </style>
 </head>
 <body>
@@ -411,36 +424,29 @@ carregarDB();
 <!-- ======== PORTAL ======== -->
 <div class="scr on" id="s-portal">
   <div class="pw">
-    <div style="width:100%;max-width:520px;position:relative;z-index:1">
-      <!-- Logo -->
-      <div style="text-align:center;margin-bottom:3rem">
-        <div style="display:inline-flex;align-items:center;gap:14px;margin-bottom:1rem">
-          <div style="width:52px;height:52px;border-radius:14px;background:linear-gradient(135deg,#00D4FF,#0088CC);display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;color:#000;box-shadow:0 0 30px rgba(0,212,255,.4)">BP</div>
-          <div style="text-align:left">
-            <div style="font-size:22px;font-weight:700;color:#fff;letter-spacing:.02em">BOLETO PAY</div>
-            <div style="font-size:11px;color:var(--mu);letter-spacing:.08em;text-transform:uppercase">Sistema de Crédito</div>
-          </div>
-        </div>
-        <div style="width:60px;height:2px;background:linear-gradient(90deg,transparent,var(--bp),transparent);margin:0 auto"></div>
+    <div style="width:100%;max-width:500px">
+      <div style="display:flex;align-items:center;gap:12px;justify-content:center;margin-bottom:2.75rem">
+        <svg width="48" height="48" viewBox="0 0 48 48"><rect width="48" height="48" rx="14" fill="#0A84FF"/><text x="50%" y="56%" dominant-baseline="middle" text-anchor="middle" fill="#fff" font-size="20" font-weight="700" font-family="Arial">BP</text></svg>
+        <span style="font-size:26px;font-weight:700;color:#fff">BOLETO PAY</span>
       </div>
-
-      <p style="text-align:center;font-size:13px;color:var(--mu);margin-bottom:1.75rem;letter-spacing:.02em">Selecione o tipo de acesso</p>
-
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:2rem">
-        <div class="pc" onclick="go('s-login-a')" style="background:rgba(0,212,255,.04);border-color:rgba(0,212,255,.15)">
-          <div style="width:52px;height:52px;border-radius:14px;background:rgba(0,212,255,.12);display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;font-size:24px">🔍</div>
+      <p style="text-align:center;font-size:14px;color:rgba(255,255,255,.4);margin-bottom:2rem">Selecione o tipo de acesso</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+        <div class="pc" onclick="go('s-login-a')">
+          <div style="width:54px;height:54px;border-radius:15px;background:rgba(10,132,255,.2);display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;font-size:22px;font-weight:700;color:#60AAFF">A</div>
           <h3 style="font-size:15px;font-weight:600;color:#fff;margin-bottom:6px">Área de análise</h3>
-          <p style="font-size:12px;color:var(--mu);line-height:1.5">Equipe interna BOLETO PAY</p>
-          <div style="display:inline-block;font-size:10px;padding:4px 12px;border-radius:20px;margin-top:12px;background:rgba(0,212,255,.12);color:var(--bp);font-weight:600;letter-spacing:.04em">ANALISTA</div>
+          <p style="font-size:12px;color:rgba(255,255,255,.4);line-height:1.5">Equipe interna BOLETO PAY</p>
+          <span style="display:inline-block;font-size:10px;padding:3px 10px;border-radius:20px;margin-top:10px;background:rgba(10,132,255,.2);color:#60AAFF;font-weight:600">Analista</span>
         </div>
-        <div class="pc" onclick="go('s-login-l')" style="background:rgba(168,85,247,.04);border-color:rgba(168,85,247,.15)">
-          <div style="width:52px;height:52px;border-radius:14px;background:rgba(168,85,247,.12);display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;font-size:24px">🏪</div>
+        <div class="pc" onclick="go('s-login-l')">
+          <div style="width:54px;height:54px;border-radius:15px;background:rgba(124,58,237,.2);display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;font-size:22px;font-weight:700;color:#C084FC">L</div>
           <h3 style="font-size:15px;font-weight:600;color:#fff;margin-bottom:6px">Portal lojista</h3>
-          <p style="font-size:12px;color:var(--mu);line-height:1.5">Gerencie suas propostas</p>
-          <div style="display:inline-block;font-size:10px;padding:4px 12px;border-radius:20px;margin-top:12px;background:rgba(168,85,247,.12);color:var(--pu);font-weight:600;letter-spacing:.04em">PARCEIRO</div>
+          <p style="font-size:12px;color:rgba(255,255,255,.4);line-height:1.5">Gerencie suas propostas</p>
+          <span style="display:inline-block;font-size:10px;padding:3px 10px;border-radius:20px;margin-top:10px;background:rgba(124,58,237,.2);color:#C084FC;font-weight:600">Parceiro</span>
         </div>
       </div>
-      <div id="fb-status-portal" style="font-size:11px;text-align:center;color:rgba(255,255,255,.1)"></div>
+      <div style="text-align:center;margin-top:1.5rem">
+        <div id="fb-status-portal" style="font-size:11px;margin-top:8px;color:rgba(255,255,255,.15)"></div>
+      </div>
     </div>
   </div>
 </div>
@@ -495,39 +501,33 @@ carregarDB();
 
 <!-- ======== LOGIN ANALISTA ======== -->
 <div class="scr" id="s-login-a">
-  <div class="pw">
-    <div class="lf" style="position:relative;z-index:1">
-      <button class="back" onclick="go('s-portal')" style="margin-bottom:1.5rem;color:var(--mu)">&#8592; Voltar</button>
-      <div class="lf-logo">
-        <div style="width:52px;height:52px;border-radius:14px;background:linear-gradient(135deg,#00D4FF,#0088CC);display:flex;align-items:center;justify-content:center;color:#000;font-size:16px;font-weight:700;margin:0 auto 1rem;box-shadow:0 0 25px rgba(0,212,255,.35)">BP</div>
-        <h2 style="font-size:20px;font-weight:700;color:var(--txt);margin-bottom:4px">Área de análise</h2>
-        <p style="font-size:13px;color:var(--mu)">Login de analistas BOLETO PAY</p>
-      </div>
-      <div class="lt">Credenciais de acesso</div>
-      <div class="fld"><label class="fl">E-mail</label><input class="fi" id="la-email" type="email" placeholder="analista@boletopay.com.br" onkeydown="if(event.key==='Enter')loginAnalista()"/></div>
-      <div class="fld"><label class="fl">Senha</label><input class="fi" id="la-senha" type="password" placeholder="••••••••" onkeydown="if(event.key==='Enter')loginAnalista()"/></div>
-      <div class="al al-rd" id="la-err">E-mail ou senha inválidos.</div>
-      <button style="width:100%;padding:13px;border:none;border-radius:11px;font-size:14px;font-weight:700;cursor:pointer;color:#000;background:linear-gradient(135deg,#00D4FF,#0088CC);margin-top:8px;box-shadow:0 0 20px rgba(0,212,255,.3)" onclick="loginAnalista()">Entrar →</button>
+  <div class="lw" style="background:linear-gradient(135deg,#0A1628,#0F2040)">
+    <div class="lc">
+      <button class="back" onclick="go('s-portal')">&#8592; Voltar</button>
+      <div style="width:42px;height:42px;border-radius:12px;background:var(--bp);display:flex;align-items:center;justify-content:center;color:#fff;font-size:16px;font-weight:700;margin-bottom:1.25rem">BP</div>
+      <h2 style="font-size:20px;font-weight:700;margin-bottom:4px">Área de análise</h2>
+      <p style="font-size:13px;color:var(--mu);margin-bottom:1.75rem">Login de analistas BOLETO PAY</p>
+      <div class="fld"><label class="fl">E-mail</label><input class="fi" id="la-email" type="email" placeholder="seu@BOLETO PAY.com.br"/></div>
+      <div class="fld"><label class="fl">Senha</label><input class="fi" id="la-senha" type="password" placeholder="Sua senha"/></div>
+      <div class="err-msg" id="la-err">E-mail ou senha inválidos.</div>
+      <button style="width:100%;padding:13px;border:none;border-radius:11px;font-size:14px;font-weight:600;cursor:pointer;color:#fff;background:var(--bp);margin-top:8px" onclick="loginAnalista()">Entrar</button>
     </div>
   </div>
 </div>
 
 <!-- ======== LOGIN LOJISTA ======== -->
 <div class="scr" id="s-login-l">
-  <div class="pw">
-    <div class="lf" style="position:relative;z-index:1;border-color:rgba(168,85,247,.15)">
-      <button class="back" onclick="go('s-portal')" style="margin-bottom:1.5rem;color:var(--mu)">&#8592; Voltar</button>
-      <div class="lf-logo">
-        <div style="width:52px;height:52px;border-radius:14px;background:linear-gradient(135deg,#A855F7,#7C3AED);display:flex;align-items:center;justify-content:center;font-size:22px;margin:0 auto 1rem;box-shadow:0 0 25px rgba(168,85,247,.35)">🏪</div>
-        <h2 style="font-size:20px;font-weight:700;color:var(--txt);margin-bottom:4px">Portal lojista</h2>
-        <p style="font-size:13px;color:var(--mu)">Acesse suas propostas e resultados</p>
-      </div>
-      <div class="lt">Credenciais de acesso</div>
-      <div class="fld"><label class="fl">E-mail / Login</label><input class="fi" id="ll-email" type="text" placeholder="seu@email.com" onkeydown="if(event.key==='Enter')loginLojista()"/></div>
-      <div class="fld"><label class="fl">Senha</label><input class="fi" id="ll-senha" type="password" placeholder="••••••••" onkeydown="if(event.key==='Enter')loginLojista()"/></div>
-      <div class="al al-rd" id="ll-err">E-mail ou senha incorretos.</div>
-      <button style="width:100%;padding:13px;border:none;border-radius:11px;font-size:14px;font-weight:700;cursor:pointer;color:#fff;background:linear-gradient(135deg,#A855F7,#7C3AED);margin-top:8px;box-shadow:0 0 20px rgba(168,85,247,.3)" onclick="loginLojista()">Entrar no portal →</button>
-      <p style="font-size:12px;color:var(--mu);text-align:center;margin-top:1.25rem">Credenciais fornecidas pela BOLETO PAY</p>
+  <div class="lw" style="background:linear-gradient(135deg,#1A0A40,#2D1B69)">
+    <div class="lc">
+      <button class="back" onclick="go('s-portal')">&#8592; Voltar</button>
+      <div style="width:42px;height:42px;border-radius:12px;background:#7C3AED;display:flex;align-items:center;justify-content:center;color:#fff;font-size:16px;font-weight:700;margin-bottom:1.25rem">L</div>
+      <h2 style="font-size:20px;font-weight:700;margin-bottom:4px">Portal lojista</h2>
+      <p style="font-size:13px;color:var(--mu);margin-bottom:1.75rem">Digite seu e-mail e senha</p>
+      <div class="fld"><label class="fl">E-mail</label><input class="fi" id="ll-email" type="email" placeholder="financeiro@suaLoja.com.br"/></div>
+      <div class="fld"><label class="fl">Senha</label><input class="fi" id="ll-senha" type="password" placeholder="Sua senha"/></div>
+      <div class="err-msg" id="ll-err">E-mail ou senha incorretos.</div>
+      <button style="width:100%;padding:13px;border:none;border-radius:11px;font-size:14px;font-weight:600;cursor:pointer;color:#fff;background:#7C3AED;margin-top:8px" onclick="loginLojista()">Entrar no portal</button>
+      <p style="font-size:12px;color:var(--mu);text-align:center;margin-top:1.125rem">Credenciais fornecidas pela BOLETO PAY</p>
     </div>
   </div>
 </div>
@@ -1869,12 +1869,7 @@ function _copiarFallback(link){
 
 function gerarEMostrarLink(){
   if(!meLj){alert('Faça login como lojista primeiro.');return;}
-  // Usa URL fixa do GitHub Pages para garantir que o link funcione
-  var base='https://wellyntonmarlom-ux.github.io/boletopay';
-  // Se estiver rodando em outro domínio, usa a URL atual
-  if(window.location.hostname!=='wellyntonmarlom-ux.github.io'){
-    base=window.location.href.split('/').slice(0,-1).join('/').replace(/\/index\.html$/,'');
-  }
+  var base=window.location.href.split('/').slice(0,-1).join('/').replace(/\/index\.html$/,'');
   var link=base+'/form.html?loja='+meLj.id+'&nome='+encodeURIComponent(meLj.nome);
   window._linkClienteGerado=link;
   var txt=document.getElementById('link-gerado-txt');
@@ -4535,6 +4530,33 @@ setTimeout(function(){
   if(DB.analistas.length>0||DB.lojistas.length>0) restaurarSessao();
   else setTimeout(restaurarSessao, 2000);
 }, 1000);
+
+// Auto-login vindo do site (landing page)
+(function(){
+  var params=new URLSearchParams(window.location.search);
+  var tipo=params.get('login');
+  var email=params.get('e');
+  var senha=params.get('s');
+  if(!tipo||!email||!senha)return;
+  // Aguarda DB carregar e faz login automático
+  function tentarLogin(tentativa){
+    if(tentativa>10)return;
+    setTimeout(function(){
+      if(tipo==='l'){
+        var found=DB.lojistas&&DB.lojistas.find(function(l){return l&&l.email.toLowerCase()===decodeURIComponent(email).toLowerCase()&&l.senha===decodeURIComponent(senha)&&l.ativo;});
+        if(found){meLj=found;atualizarTopLojista();go('s-lojista');}
+        else if(DB.lojistas&&DB.lojistas.length>0){var el=document.getElementById('ll-email');var sl=document.getElementById('ll-senha');if(el)el.value=decodeURIComponent(email);if(sl)sl.value=decodeURIComponent(senha);go('s-login-l');}
+        else tentarLogin(tentativa+1);
+      } else {
+        var foundA=DB.analistas&&DB.analistas.find(function(a){return a&&a.email.toLowerCase()===decodeURIComponent(email).toLowerCase()&&a.senha===decodeURIComponent(senha)&&a.ativo;});
+        if(foundA){me=foundA;_aplicarLoginAnalista();go('s-dash');}
+        else if(DB.analistas&&DB.analistas.length>0){var ea=document.getElementById('la-email');var sa=document.getElementById('la-senha');if(ea)ea.value=decodeURIComponent(email);if(sa)sa.value=decodeURIComponent(senha);go('s-login-a');}
+        else tentarLogin(tentativa+1);
+      }
+    }, 500);
+  }
+  tentarLogin(0);
+})();
 
 (function(){
   var hash=window.location.hash||'';

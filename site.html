@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>BOLETO PAY — Crédito inteligente para lojistas</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --c:#00D4FF;--c2:#A855F7;--gr:#00E676;
+  --bg:#05080F;--bg2:#080E1A;--brd:rgba(255,255,255,.07);
+  --txt:#EEF2F8;--mu:rgba(238,242,248,.5);
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--txt);font-family:'DM Sans',sans-serif;overflow-x:hidden}
+h1,h2,h3,.logo-txt{font-family:'Syne',sans-serif}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1.25rem 2rem;display:flex;align-items:center;justify-content:space-between;background:rgba(5,8,15,.8);backdrop-filter:blur(20px);border-bottom:1px solid var(--brd)}
+.logo{display:flex;align-items:center;gap:10px}
+.logo-mark{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#00D4FF,#0088CC);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:13px;color:#000;box-shadow:0 0 20px rgba(0,212,255,.35)}
+.logo-txt{font-size:15px;font-weight:700;letter-spacing:.04em;color:var(--txt)}
+.nav-links{display:flex;align-items:center;gap:2rem}
+.nav-links a{font-size:13px;color:var(--mu);text-decoration:none;transition:.2s;font-weight:500}
+.nav-links a:hover{color:var(--txt)}
+.nav-cta{padding:9px 20px;border-radius:8px;background:var(--c);color:#000;font-size:13px;font-weight:700;text-decoration:none;font-family:'Syne',sans-serif;letter-spacing:.02em;box-shadow:0 0 20px rgba(0,212,255,.3);transition:.2s}
+.nav-cta:hover{box-shadow:0 0 35px rgba(0,212,255,.5);transform:translateY(-1px)}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:7rem 2rem 4rem;position:relative;overflow:hidden;text-align:center}
+.hero-bg{position:absolute;inset:0;pointer-events:none}
+.hero-bg::before{content:'';position:absolute;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(0,212,255,.08),transparent 70%);top:50%;left:50%;transform:translate(-50%,-50%)}
+.hero-bg::after{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(0,212,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(0,212,255,.025) 1px,transparent 1px);background-size:60px 60px}
+.grid-float{position:absolute;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(168,85,247,.06),transparent 70%);top:20%;right:10%;animation:float 6s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-20px)}}
+.hero-inner{position:relative;z-index:1;max-width:780px;margin:0 auto}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;padding:6px 16px;border-radius:30px;border:1px solid rgba(0,212,255,.25);background:rgba(0,212,255,.06);font-size:12px;color:var(--c);font-weight:500;margin-bottom:2rem;letter-spacing:.04em}
+.badge-dot{width:6px;height:6px;border-radius:50%;background:var(--c);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(1.4)}}
+h1{font-size:clamp(2.5rem,6vw,4.5rem);font-weight:800;line-height:1.05;margin-bottom:1.5rem;letter-spacing:-.02em}
+h1 span{background:linear-gradient(135deg,#00D4FF,#A855F7);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{font-size:clamp(1rem,2vw,1.2rem);color:var(--mu);line-height:1.7;margin-bottom:2.5rem;max-width:560px;margin-left:auto;margin-right:auto;font-weight:300}
+.hero-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+.btn-primary{padding:14px 32px;border-radius:10px;background:linear-gradient(135deg,#00D4FF,#0088CC);color:#000;font-size:15px;font-weight:700;text-decoration:none;font-family:'Syne',sans-serif;box-shadow:0 0 30px rgba(0,212,255,.3);transition:.25s;letter-spacing:.02em}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 0 50px rgba(0,212,255,.5)}
+.btn-sec{padding:14px 32px;border-radius:10px;border:1px solid var(--brd);color:var(--txt);font-size:15px;font-weight:500;text-decoration:none;transition:.25s;background:rgba(255,255,255,.03)}
+.btn-sec:hover{border-color:var(--c);color:var(--c);background:rgba(0,212,255,.05)}
+.hero-stats{display:flex;justify-content:center;gap:3rem;margin-top:4rem;padding-top:3rem;border-top:1px solid var(--brd);flex-wrap:wrap}
+.stat{text-align:center}
+.stat-n{font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;background:linear-gradient(135deg,#00D4FF,#A855F7);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.stat-l{font-size:12px;color:var(--mu);margin-top:4px;letter-spacing:.04em;text-transform:uppercase}
+
+/* COMO FUNCIONA */
+.section{padding:6rem 2rem;max-width:1100px;margin:0 auto}
+.sec-label{font-size:11px;color:var(--c);font-weight:600;letter-spacing:.1em;text-transform:uppercase;margin-bottom:1rem}
+.sec-title{font-size:clamp(1.75rem,4vw,2.75rem);font-weight:800;margin-bottom:1rem;letter-spacing:-.02em}
+.sec-sub{font-size:1rem;color:var(--mu);line-height:1.7;max-width:520px;font-weight:300}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.5rem;margin-top:3.5rem}
+.step-card{background:rgba(13,27,42,.6);border:1px solid var(--brd);border-radius:16px;padding:1.75rem;position:relative;overflow:hidden;transition:.25s}
+.step-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--c),var(--c2));opacity:0;transition:.25s}
+.step-card:hover{border-color:rgba(0,212,255,.2);transform:translateY(-4px);box-shadow:0 20px 40px rgba(0,0,0,.3)}
+.step-card:hover::before{opacity:1}
+.step-num{font-family:'Syne',sans-serif;font-size:3rem;font-weight:800;color:rgba(0,212,255,.12);margin-bottom:.75rem;line-height:1}
+.step-icon{font-size:2rem;margin-bottom:1rem}
+.step-title{font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;margin-bottom:.5rem;color:var(--txt)}
+.step-desc{font-size:13px;color:var(--mu);line-height:1.7;font-weight:300}
+
+/* BENEFÍCIOS */
+.benefits-wrap{background:var(--bg2);border-top:1px solid var(--brd);border-bottom:1px solid var(--brd)}
+.benefits{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;padding:6rem 2rem;max-width:1100px;margin:0 auto}
+.benefit-list{display:flex;flex-direction:column;gap:1.25rem;margin-top:2.5rem}
+.benefit-item{display:flex;align-items:flex-start;gap:1rem;padding:1rem 1.25rem;border-radius:12px;background:rgba(255,255,255,.03);border:1px solid var(--brd);transition:.2s}
+.benefit-item:hover{border-color:rgba(0,212,255,.2);background:rgba(0,212,255,.04)}
+.benefit-ic{width:36px;height:36px;border-radius:10px;background:rgba(0,212,255,.1);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.benefit-txt h4{font-family:'Syne',sans-serif;font-size:14px;font-weight:700;margin-bottom:3px}
+.benefit-txt p{font-size:12px;color:var(--mu);line-height:1.6;font-weight:300}
+.phone-mock{background:rgba(13,27,42,.8);border:1px solid var(--brd);border-radius:24px;padding:2rem;position:relative;overflow:hidden}
+.phone-mock::before{content:'';position:absolute;top:-50%;right:-50%;width:200%;height:200%;background:radial-gradient(circle at 70% 30%,rgba(168,85,247,.05),transparent 60%)}
+.mock-header{display:flex;align-items:center;gap:10px;margin-bottom:1.5rem;padding-bottom:1rem;border-bottom:1px solid var(--brd)}
+.mock-av{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#00D4FF,#A855F7);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-size:11px;font-weight:800;color:#000}
+.mock-info h5{font-size:13px;font-weight:600;font-family:'Syne',sans-serif}
+.mock-info span{font-size:11px;color:var(--gr)}
+.mock-card{background:rgba(0,212,255,.06);border:1px solid rgba(0,212,255,.15);border-radius:12px;padding:1rem;margin-bottom:10px}
+.mock-card-label{font-size:10px;color:var(--c);font-weight:600;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px}
+.mock-card-val{font-family:'Syne',sans-serif;font-size:1.25rem;font-weight:800}
+.mock-card-sub{font-size:11px;color:var(--mu);margin-top:2px}
+.mock-row{display:flex;justify-content:space-between;font-size:12px;padding:6px 0;border-bottom:1px solid var(--brd)}
+.mock-row:last-child{border:none}
+.mock-row span:first-child{color:var(--mu)}
+.mock-row span:last-child{font-weight:600}
+.mock-badge{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:20px;background:rgba(0,230,118,.1);color:var(--gr);font-size:11px;font-weight:600;margin-top:10px}
+
+/* PLANOS */
+.plans-wrap{padding:6rem 2rem;max-width:1100px;margin:0 auto;text-align:center}
+.plans{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.5rem;margin-top:3.5rem;text-align:left}
+.plan-card{background:rgba(13,27,42,.6);border:1px solid var(--brd);border-radius:20px;padding:2rem;position:relative;transition:.25s}
+.plan-card.featured{border-color:rgba(0,212,255,.3);background:rgba(0,212,255,.04)}
+.plan-card.featured::before{content:'MAIS POPULAR';position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#00D4FF,#0088CC);color:#000;font-size:10px;font-weight:800;font-family:'Syne',sans-serif;padding:4px 14px;border-radius:20px;letter-spacing:.06em}
+.plan-card:hover{transform:translateY(-4px);box-shadow:0 20px 50px rgba(0,0,0,.3)}
+.plan-name{font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:var(--c);letter-spacing:.06em;text-transform:uppercase;margin-bottom:.75rem}
+.plan-price{font-family:'Syne',sans-serif;font-size:2.25rem;font-weight:800;margin-bottom:.25rem}
+.plan-price sup{font-size:1rem;vertical-align:super;font-weight:600}
+.plan-per{font-size:12px;color:var(--mu);margin-bottom:1.5rem}
+.plan-feats{list-style:none;display:flex;flex-direction:column;gap:.625rem;margin-bottom:2rem}
+.plan-feats li{font-size:13px;color:var(--mu);display:flex;align-items:center;gap:8px;font-weight:300}
+.plan-feats li::before{content:'✓';color:var(--gr);font-weight:700;font-size:12px;flex-shrink:0}
+.plan-btn{display:block;width:100%;padding:12px;border-radius:10px;text-align:center;font-size:13px;font-weight:700;font-family:'Syne',sans-serif;text-decoration:none;transition:.2s;letter-spacing:.02em}
+.plan-btn-outline{border:1px solid var(--brd);color:var(--txt);background:transparent}
+.plan-btn-outline:hover{border-color:var(--c);color:var(--c)}
+.plan-btn-solid{background:linear-gradient(135deg,#00D4FF,#0088CC);color:#000;box-shadow:0 0 20px rgba(0,212,255,.25)}
+.plan-btn-solid:hover{box-shadow:0 0 40px rgba(0,212,255,.45)}
+
+/* LOGIN LOJISTA INTEGRADO */
+.login-section{background:var(--bg2);border-top:1px solid var(--brd);border-bottom:1px solid var(--brd)}
+.login-wrap{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;padding:6rem 2rem;max-width:1100px;margin:0 auto}
+.login-box{background:rgba(13,27,42,.9);border:1px solid var(--brd);border-radius:20px;padding:2.5rem;backdrop-filter:blur(10px)}
+.login-box.analista{border-color:rgba(0,212,255,.15)}
+.login-tabs{display:flex;gap:0;border-bottom:1px solid var(--brd);margin-bottom:1.75rem}
+.login-tab{padding:10px 20px;font-size:13px;font-weight:500;color:var(--mu);cursor:pointer;border-bottom:2px solid transparent;transition:.15s;font-family:'DM Sans',sans-serif}
+.login-tab.on{color:var(--c);border-bottom-color:var(--c);font-weight:600}
+.lf-form{display:none}.lf-form.on{display:block}
+.fi{width:100%;padding:12px 14px;border:1.5px solid var(--brd);border-radius:10px;font-size:14px;background:rgba(255,255,255,.05);color:var(--txt);outline:none;transition:.2s;font-family:'DM Sans',sans-serif;margin-bottom:14px}
+.fi:focus{border-color:var(--c);box-shadow:0 0 0 3px rgba(0,212,255,.1)}
+.fi::placeholder{color:rgba(238,242,248,.3)}
+.fl{display:block;font-size:12px;color:var(--mu);font-weight:500;margin-bottom:6px;letter-spacing:.02em}
+.err-box{background:rgba(255,68,68,.08);border:1px solid rgba(255,68,68,.2);border-radius:8px;padding:10px 14px;font-size:13px;color:#FF6666;margin-bottom:14px;display:none}
+.err-box.on{display:block}
+.login-btn{width:100%;padding:13px;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;font-family:'Syne',sans-serif;letter-spacing:.02em;transition:.2s}
+.login-btn-a{background:linear-gradient(135deg,#00D4FF,#0088CC);color:#000;box-shadow:0 0 20px rgba(0,212,255,.25)}
+.login-btn-a:hover{box-shadow:0 0 35px rgba(0,212,255,.45)}
+.login-btn-l{background:linear-gradient(135deg,#A855F7,#7C3AED);color:#fff;box-shadow:0 0 20px rgba(168,85,247,.25)}
+.login-btn-l:hover{box-shadow:0 0 35px rgba(168,85,247,.45)}
+.login-info{font-size:11px;color:var(--mu);text-align:center;margin-top:12px}
+
+/* CTA FINAL */
+.cta-section{padding:7rem 2rem;text-align:center;position:relative;overflow:hidden}
+.cta-section::before{content:'';position:absolute;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(0,212,255,.06),transparent 70%);top:50%;left:50%;transform:translate(-50%,-50%)}
+.cta-inner{position:relative;z-index:1;max-width:600px;margin:0 auto}
+.cta-title{font-size:clamp(1.75rem,4vw,3rem);font-weight:800;margin-bottom:1rem;letter-spacing:-.02em}
+.cta-sub{font-size:1rem;color:var(--mu);margin-bottom:2.5rem;line-height:1.7;font-weight:300}
+.cta-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+
+/* FOOTER */
+footer{border-top:1px solid var(--brd);padding:2.5rem 2rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;max-width:1100px;margin:0 auto}
+.footer-l{font-size:12px;color:var(--mu)}
+.footer-links{display:flex;gap:1.5rem}
+.footer-links a{font-size:12px;color:var(--mu);text-decoration:none;transition:.2s}
+.footer-links a:hover{color:var(--c)}
+
+/* ANIMAÇÕES */
+.fade-up{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease}
+.fade-up.visible{opacity:1;transform:none}
+
+@media(max-width:768px){
+  nav{padding:1rem}
+  .nav-links{display:none}
+  .benefits{grid-template-columns:1fr}
+  .login-wrap{grid-template-columns:1fr}
+  h1{font-size:2.25rem}
+  .hero-stats{gap:2rem}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">
+    <div class="logo-mark">BP</div>
+    <span class="logo-txt">BOLETO PAY</span>
+  </div>
+  <div class="nav-links">
+    <a href="#como-funciona">Como funciona</a>
+    <a href="#beneficios">Benefícios</a>
+    <a href="#acesso">Acessar portal</a>
+  </div>
+  <a href="#acesso" class="nav-cta">Entrar no portal →</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="grid-float"></div>
+  <div class="hero-inner">
+    <div class="hero-badge">
+      <span class="badge-dot"></span>
+      Plataforma de crédito digital
+    </div>
+    <h1>Crédito inteligente<br/>para <span>lojistas de todo</span><br/>o Brasil</h1>
+    <p class="hero-sub">Análise de crédito rápida, digital e sem burocracia. Seu cliente solicita pelo celular, você recebe o resultado em minutos.</p>
+    <div class="hero-btns">
+      <a href="#acesso" class="btn-primary">Acessar portal →</a>
+      <a href="#como-funciona" class="btn-sec">Como funciona</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat"><div class="stat-n">500+</div><div class="stat-l">Lojistas parceiros</div></div>
+      <div class="stat"><div class="stat-n">98%</div><div class="stat-l">Satisfação</div></div>
+      <div class="stat"><div class="stat-n">5min</div><div class="stat-l">Tempo de análise</div></div>
+      <div class="stat"><div class="stat-n">R$90k</div><div class="stat-l">Crédito disponível</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- COMO FUNCIONA -->
+<section id="como-funciona">
+  <div class="section">
+    <div class="fade-up">
+      <div class="sec-label">Processo simples</div>
+      <h2 class="sec-title">Como funciona em<br/>4 passos</h2>
+      <p class="sec-sub">Do pedido à aprovação, tudo digital. Sem papelada, sem filas, sem complicação.</p>
+    </div>
+    <div class="steps">
+      <div class="step-card fade-up">
+        <div class="step-num">01</div>
+        <div class="step-icon">🔗</div>
+        <h3 class="step-title">Gere o link</h3>
+        <p class="step-desc">No seu portal, gere um link personalizado e envie pelo WhatsApp para o cliente.</p>
+      </div>
+      <div class="step-card fade-up">
+        <div class="step-num">02</div>
+        <div class="step-icon">📱</div>
+        <h3 class="step-title">Cliente preenche</h3>
+        <p class="step-desc">O cliente preenche o formulário pelo celular, anexa documentos e envia em minutos.</p>
+      </div>
+      <div class="step-card fade-up">
+        <div class="step-num">03</div>
+        <div class="step-icon">🔍</div>
+        <h3 class="step-title">Análise em tempo real</h3>
+        <p class="step-desc">Nossa equipe analisa o crédito e envia até 3 propostas diferentes para você escolher.</p>
+      </div>
+      <div class="step-card fade-up">
+        <div class="step-num">04</div>
+        <div class="step-icon">✅</div>
+        <h3 class="step-title">Crédito aprovado</h3>
+        <p class="step-desc">Você e o cliente recebem o resultado. Venda realizada, crédito garantido.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BENEFÍCIOS -->
+<div class="benefits-wrap" id="beneficios">
+  <div class="benefits">
+    <div class="fade-up">
+      <div class="sec-label">Vantagens exclusivas</div>
+      <h2 class="sec-title">Por que escolher<br/>a BOLETO PAY?</h2>
+      <div class="benefit-list">
+        <div class="benefit-item">
+          <div class="benefit-ic">⚡</div>
+          <div class="benefit-txt">
+            <h4>Análise ultra-rápida</h4>
+            <p>Resultado em até 5 minutos. Sem espera, sem papelada, sem burocracia.</p>
+          </div>
+        </div>
+        <div class="benefit-item">
+          <div class="benefit-ic">📊</div>
+          <div class="benefit-txt">
+            <h4>Até 3 propostas simultâneas</h4>
+            <p>Oferecemos múltiplas opções de crédito para o cliente escolher a melhor.</p>
+          </div>
+        </div>
+        <div class="benefit-item">
+          <div class="benefit-ic">🔒</div>
+          <div class="benefit-txt">
+            <h4>100% digital e seguro</h4>
+            <p>Dados criptografados. LGPD. Documentos enviados diretamente pelo cliente.</p>
+          </div>
+        </div>
+        <div class="benefit-item">
+          <div class="benefit-ic">🌎</div>
+          <div class="benefit-txt">
+            <h4>Atende negativados</h4>
+            <p>Crédito CLT aprova mesmo com restrições. Mais clientes, mais vendas.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="phone-mock fade-up">
+      <div class="mock-header">
+        <div class="mock-av">BP</div>
+        <div class="mock-info">
+          <h5>Portal BOLETO PAY</h5>
+          <span>● Online agora</span>
+        </div>
+      </div>
+      <div class="mock-card">
+        <div class="mock-card-label">✅ Aprovado hoje</div>
+        <div class="mock-card-val">R$ 12.500</div>
+        <div class="mock-card-sub">3 aprovações · 09 de maio</div>
+      </div>
+      <div class="mock-row"><span>Na fila</span><span style="color:#FFB700">2 propostas</span></div>
+      <div class="mock-row"><span>Taxa aprovação</span><span style="color:#00E676">78%</span></div>
+      <div class="mock-row"><span>Ticket médio</span><span>R$ 3.800</span></div>
+      <div class="mock-row"><span>Este mês</span><span>16 solicitações</span></div>
+      <div class="mock-badge">
+        <span>●</span> Sincronizado em tempo real
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ACESSO AO PORTAL -->
+<div class="login-section" id="acesso">
+  <div class="login-wrap">
+    <div class="fade-up">
+      <div class="sec-label">Acesso direto</div>
+      <h2 class="sec-title">Entre na<br/>plataforma</h2>
+      <p class="sec-sub" style="margin-top:1rem">Acesse seu portal como lojista parceiro ou entre na área de análise da equipe BOLETO PAY.</p>
+      <div style="margin-top:2rem;display:flex;flex-direction:column;gap:12px">
+        <div style="display:flex;align-items:center;gap:10px;font-size:13px;color:var(--mu)">
+          <span style="color:var(--c)">✓</span> Dashboard com resultados em tempo real
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;font-size:13px;color:var(--mu)">
+          <span style="color:var(--c)">✓</span> Geração de link para o cliente
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;font-size:13px;color:var(--mu)">
+          <span style="color:var(--c)">✓</span> Acompanhamento de todas as propostas
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;font-size:13px;color:var(--mu)">
+          <span style="color:var(--c)">✓</span> Notificações de resultado imediatas
+        </div>
+      </div>
+    </div>
+
+    <div class="login-box fade-up">
+      <div class="login-tabs">
+        <div class="login-tab on" onclick="trocarTab('lojista',this)">🏪 Lojista</div>
+        <div class="login-tab" onclick="trocarTab('analista',this)">🔍 Analista</div>
+      </div>
+
+      <!-- FORM LOJISTA -->
+      <div class="lf-form on" id="form-lojista">
+        <div>
+          <label class="fl">E-mail / Login</label>
+          <input class="fi" id="ll-email" type="text" placeholder="seu@email.com" onkeydown="if(event.key==='Enter')fazerLogin('l')"/>
+        </div>
+        <div>
+          <label class="fl">Senha</label>
+          <input class="fi" id="ll-senha" type="password" placeholder="••••••••" onkeydown="if(event.key==='Enter')fazerLogin('l')"/>
+        </div>
+        <div class="err-box" id="ll-err">E-mail ou senha incorretos.</div>
+        <button class="login-btn login-btn-l" onclick="fazerLogin('l')">Entrar no portal →</button>
+        <p class="login-info">Credenciais fornecidas pela equipe BOLETO PAY</p>
+      </div>
+
+      <!-- FORM ANALISTA -->
+      <div class="lf-form" id="form-analista">
+        <div>
+          <label class="fl">E-mail</label>
+          <input class="fi" id="la-email" type="email" placeholder="analista@boletopay.com.br" onkeydown="if(event.key==='Enter')fazerLogin('a')"/>
+        </div>
+        <div>
+          <label class="fl">Senha</label>
+          <input class="fi" id="la-senha" type="password" placeholder="••••••••" onkeydown="if(event.key==='Enter')fazerLogin('a')"/>
+        </div>
+        <div class="err-box" id="la-err">E-mail ou senha inválidos.</div>
+        <button class="login-btn login-btn-a" onclick="fazerLogin('a')">Entrar na área de análise →</button>
+        <p class="login-info">Acesso restrito à equipe interna</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CTA FINAL -->
+<section class="cta-section">
+  <div class="cta-inner fade-up">
+    <h2 class="cta-title">Pronto para vender<br/>mais com crédito?</h2>
+    <p class="cta-sub">Junte-se a centenas de lojistas que já usam a BOLETO PAY para oferecer crédito rápido e sem burocracia para seus clientes.</p>
+    <div class="cta-btns">
+      <a href="#acesso" class="btn-primary">Começar agora →</a>
+      <a href="https://wa.me/554599231703?text=Olá! Tenho interesse em ser parceiro BOLETO PAY." target="_blank" class="btn-sec">💬 Falar no WhatsApp</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<div style="border-top:1px solid var(--brd)">
+  <footer>
+    <div class="logo">
+      <div class="logo-mark">BP</div>
+      <span class="logo-txt">BOLETO PAY</span>
+    </div>
+    <div class="footer-l">© 2026 BOLETO PAY. Todos os direitos reservados.</div>
+    <div class="footer-links">
+      <a href="#">Privacidade</a>
+      <a href="#">Termos</a>
+      <a href="https://wa.me/554599231703" target="_blank">Contato</a>
+    </div>
+  </footer>
+</div>
+
+<script>
+// ===== TABS DE LOGIN =====
+function trocarTab(tipo, el) {
+  document.querySelectorAll('.login-tab').forEach(function(t){t.classList.remove('on');});
+  document.querySelectorAll('.lf-form').forEach(function(f){f.classList.remove('on');});
+  el.classList.add('on');
+  document.getElementById('form-'+tipo).classList.add('on');
+}
+
+// ===== LOGIN — redireciona para o sistema =====
+var SISTEMA_URL = 'https://wellyntonmarlom-ux.github.io/boletopay/';
+
+function fazerLogin(tipo) {
+  var email, senha, errEl;
+  if (tipo === 'l') {
+    email = (document.getElementById('ll-email')||{}).value || '';
+    senha = (document.getElementById('ll-senha')||{}).value || '';
+    errEl = document.getElementById('ll-err');
+  } else {
+    email = (document.getElementById('la-email')||{}).value || '';
+    senha = (document.getElementById('la-senha')||{}).value || '';
+    errEl = document.getElementById('la-err');
+  }
+
+  if (!email || !senha) {
+    errEl.textContent = 'Preencha e-mail e senha.';
+    errEl.classList.add('on');
+    return;
+  }
+
+  errEl.classList.remove('on');
+
+  // Salva credenciais temporárias e redireciona para o sistema
+  try {
+    sessionStorage.setItem('bp_auto_email', email);
+    sessionStorage.setItem('bp_auto_senha', senha);
+    sessionStorage.setItem('bp_auto_tipo', tipo === 'l' ? 'lojista' : 'analista');
+  } catch(e) {}
+
+  // Redireciona para o sistema com parâmetros de login
+  var url = SISTEMA_URL + '?login=' + tipo + '&e=' + encodeURIComponent(email) + '&s=' + encodeURIComponent(senha);
+  window.location.href = url;
+}
+
+// ===== ANIMAÇÕES DE SCROLL =====
+var observer = new IntersectionObserver(function(entries) {
+  entries.forEach(function(e) {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.fade-up').forEach(function(el) {
+  observer.observe(el);
+});
+
+// Hero visível imediatamente
+document.querySelector('.hero-inner').classList.add('visible');
+</script>
+</body>
+</html>
